@@ -2,7 +2,6 @@ import { FC, useState, createContext,useEffect, useRef } from 'react'
 import { nanoid } from 'nanoid'
 
 import request from './utils/request'
-// import useStorage from './hooks/useStorage'
 import getCurrentDate from './utils/getCurrentDate'
 
 import TopBar from './components/TopBar'
@@ -21,7 +20,6 @@ const App: FC = () => {
   const [contentDivHeight, setContentDivHeight] = useState('300px')
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [autoScroll, setAutoScroll] = useState(false)
   const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{scrollBottm: () => void}>(null)
@@ -47,20 +45,29 @@ const App: FC = () => {
   }
 
   const onSubmit = async (value: string) => {
-    setLoading(true)
+
     setTyper(true)
+    setLoading(true)
     setMsg(setStroage({key: nanoid(),role: 'user',date: getCurrentDate(),message: value}))
 
     try {
 
-      let result = await request(value)
-      result.choices[0].message.content
-    
+      const session: string = localStorage.getItem('session') || '';
+
+      let result = await request({
+        message: value, 
+        sessionId:  session
+      })
+
+      if (result.sessionId) {
+        localStorage.setItem('session', result.sessionId)
+      }
+
       setMsg(setStroage({
-        key: result.id,
+        key: nanoid(),
         role: 'assistant',
         date: getCurrentDate(),
-        message: result.choices[0].message.content
+        message: result.message
       }))
     }
     catch (error){

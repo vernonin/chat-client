@@ -50,6 +50,10 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ height, dialog,
 				))
 			}
 
+			<span onClick={scrollBottm}>
+				<i className="bi bi-arrow-down-circle-fill text-success down-icon"></i>
+			</span>
+
 			<p style={{height: '20px'}}></p>
 		</div>
 	)

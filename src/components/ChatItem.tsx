@@ -26,15 +26,13 @@ const LeftChat: FC<LeftChatProps> = ({
 
 	const lastEleRef = useRef<HTMLDivElement>(null)
 
-	isLastEle && useEffect(() => {
-		console.log('item render.')
-
-		// let timer = setTimeout(() => {
-		// 	isLastEle && lastEleRef.current?.scrollIntoView()
-		// }, 2000)
+	useEffect(() => {
+		let timer = setTimeout(() => {
+			isLastEle && lastEleRef.current?.scrollIntoView()
+		}, 2000)
 
 		return () => {
-			// clearTimeout(timer)
+			clearTimeout(timer)
 			isLastEle && lastEleRef.current?.scrollIntoView()
 		}
 	}, [])
@@ -42,7 +40,7 @@ const LeftChat: FC<LeftChatProps> = ({
 
 	return (
 		<div ref={isLastEle ? lastEleRef : null} className={`d-flex mt-2 ${role === 'user' ? 'flex-row-reverse' : ''}`}>
-			<img style={style} className='rounded' src={role === 'user' ? '/ikun.jpg' : '/chatgpt.png'} />
+			<img style={style} className='rounded' src={role === 'user' ? '/ikun.jpg' : '/chat.png'} />
 			<div className={role === 'user' ? 'me-2' : 'ms-2'}>
 				<p
 					style={{fontSize: '12px'}}

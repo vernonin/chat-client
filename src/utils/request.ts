@@ -1,20 +1,18 @@
-const URL = "https://api.openai.com/v1/chat/completions";
-const KEY = "your openai key";
+const URL = "/chat";
 const headers = {
 	"Content-Type": "application/json",
-	"Authorization": "Bearer " + KEY
 };
 
-export default async function (content: string) {
-		let result = await fetch(URL, {
-			headers,
-			method: 'POST',
-			body: JSON.stringify({
-				model: "gpt-3.5-turbo",
-    		messages: [{role: "user", content}]
-			})
-		})
-		let data = await result.json()
+interface IData {
+	message: string
+	sessionId?: string
+}
 
-		return data
+export default async function (data: IData) {
+
+	const config = { headers, method: "POST", body: JSON.stringify(data)}
+	
+	let result = await fetch(URL, config)
+
+	return await result.json()
 }

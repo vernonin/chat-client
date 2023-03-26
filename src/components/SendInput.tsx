@@ -3,13 +3,11 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import './content.css'
-
 interface SendInputProps {
   loading: boolean
   onSubmit: (value: string) => void 
 }
 
-// fixed-bottom
 const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
   const [value, setValue] = useState<string>("")
 
