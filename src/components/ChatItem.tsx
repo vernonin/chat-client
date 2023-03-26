@@ -40,7 +40,7 @@ const LeftChat: FC<LeftChatProps> = ({
 
 	return (
 		<div ref={isLastEle ? lastEleRef : null} className={`d-flex mt-2 ${role === 'user' ? 'flex-row-reverse' : ''}`}>
-			<img style={style} className='rounded' src={role === 'user' ? '/ikun.jpg' : '/chat.png'} />
+			<img style={style} className='rounded' src={role === 'user' ? '/ikun.jpg' : '/gpt.png'} />
 			<div className={role === 'user' ? 'me-2' : 'ms-2'}>
 				<p
 					style={{fontSize: '12px'}}
