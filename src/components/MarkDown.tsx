@@ -1,8 +1,7 @@
 import {FC, useState, useEffect, useContext} from 'react'
 import ReactMarkdown from 'react-markdown'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-// import meatch from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // 打字效果
 import EasyTyper from 'easy-typer-js'
@@ -53,9 +52,9 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 					return !inline && match ? (
 						<SyntaxHighlighter
 							children={String(children).replace(/\n$/, '')}
-							style={dark}
+							style={vscDarkPlus}
 							language={match[1]}
-							PreTag="p"
+							PreTag="div"
 							{...props}
 						/>
 					) : (

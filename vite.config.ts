@@ -1,15 +1,18 @@
-import { defineConfig } from 'vite'
-// import { resolve } from 'path'
+import { defineConfig, loadEnv  } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/chat': {
-        target: 'http://47.243.54.53:18001',
+export default ({ mode }) => {
+
+  const env = loadEnv(mode, process.cwd())
+
+  return defineConfig({
+    plugins: [react()],
+    server: {
+      proxy: {
+        '/chat': {
+          target: env.VITE_APP_URL,
+        }
       }
     }
-  }
-})
+  })
+}

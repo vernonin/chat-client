@@ -29,7 +29,7 @@ const LeftChat: FC<LeftChatProps> = ({
 	useEffect(() => {
 		let timer = setTimeout(() => {
 			isLastEle && lastEleRef.current?.scrollIntoView()
-		}, 2000)
+		}, 0)
 
 		return () => {
 			clearTimeout(timer)
