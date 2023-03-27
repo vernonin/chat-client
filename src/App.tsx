@@ -7,6 +7,7 @@ import getCurrentDate from './utils/getCurrentDate'
 import TopBar from './components/TopBar'
 import Content, { IMessage } from './components/Content'
 import SendInput from './components/SendInput'
+import Footer from './components/Footer'
 
 export const Context = createContext<{
   typer: boolean,
@@ -17,7 +18,7 @@ export const Context = createContext<{
 
 
 const App: FC = () => {
-  const [contentDivHeight, setContentDivHeight] = useState('300px')
+  const [contentDivHeight, setContentDivHeight] = useState('500px')
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
@@ -29,12 +30,17 @@ const App: FC = () => {
   }, [])
 
   useEffect(() => {
-    const dValue = window.innerWidth > 576 ? 40 : 120
+    // 获取浏览器总高度，在减去头部（42px）和底部（36px）的区域
+    const innerHeight = window.innerHeight
+
     if (contentRef.current) {
-      setContentDivHeight(`${contentRef.current.clientHeight - dValue}px`)
+      setContentDivHeight(`${innerHeight - 78}px`)
     }
   }, [])
 
+  const scrollButtm = () => {
+    cRef.current?.scrollBottm()
+  }
 
   const setStroage = (data: IMessage): IMessage[] => {
     const sMess = JSON.parse(localStorage.getItem('message') || "[]")
@@ -83,20 +89,41 @@ const App: FC = () => {
 
   return (
     <Context.Provider value={{typer, loading, setTyper, setLoading}}>
-      <div className="vh-100 d-flex flex-column fixed-top">
+      <div className="vh-100 fixed-top">
+
+        {/* Top nav */}
         <TopBar />
-        <div style={{flex: '1', backgroundColor: '#EEE'}} className="d-flex flex-column">
-          <div ref={contentRef} style={{flex: '1'}} className="container border">
-            <Content cRef={cRef} height={contentDivHeight} dialog={msg}/>
+
+        {/* content */}
+        <div style={{height: contentDivHeight}}
+          className="bg-info bg-opacity-10 overflow-hidden"
+        >
+          <div
+            ref={contentRef}
+            style={{height: "100%", position: "relative"}}
+            className="container border d-flex flex-column pb-2"
+          >
+            <Content cRef={cRef} dialog={msg}/>
             <SendInput loading={loading} onSubmit={onSubmit} />
-          </div>
-          <div className="text-center text-muted footer">
-            Copyright &copy;
+            <span onClick={scrollButtm}>
+              <i className="bi bi-arrow-down-circle-fill text-primary down-icon"></i>
+            </span>
           </div>
         </div>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </Context.Provider>
   )
 }
 
 export default App
+
+/**
+ * heder: 42px
+ * footer: 36px
+ * inputSearch: 40px
+ * 
+ * total: 112px
+ */
