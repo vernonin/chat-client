@@ -13,13 +13,12 @@ export interface IMessage {
 
 interface ContentProps {
 	cRef: any
-	height: string
 	dialog: IMessage[]
 }
 
 type cRef = null
 
-const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ height, dialog, cRef }, ref) => {
+const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef }, ref) => {
 
 	const divRef = useRef<HTMLDivElement>(null)
 
@@ -36,7 +35,7 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ height, dialog,
 	}))
 
 	return (
-		<div ref={divRef} style={{ height }} className="content-h overflow-auto">
+		<div ref={divRef} style={{ flex: "1", position: "relative" }} className="content-h overflow-auto pb-2">
 			<p style={{height: '0.25rem'}}></p>
 			{
 				dialog.map((d, i) => (
@@ -50,11 +49,6 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ height, dialog,
 				))
 			}
 
-			<span onClick={scrollBottm}>
-				<i className="bi bi-arrow-down-circle-fill text-success down-icon"></i>
-			</span>
-
-			<p style={{height: '20px'}}></p>
 		</div>
 	)
 }

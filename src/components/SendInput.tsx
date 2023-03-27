@@ -19,7 +19,7 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
   }
 
 	return (
-		<div style={{height: '40px'}} className="mx-auto w-100">
+		<div style={{ height: "40px" }} className="mx-auto w-100">
       <ToastContainer
         position="top-center"
         autoClose={2000}
