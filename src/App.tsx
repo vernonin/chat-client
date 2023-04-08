@@ -8,6 +8,13 @@ import TopBar from './components/TopBar'
 import Content, { IMessage } from './components/Content'
 import SendInput from './components/SendInput'
 import Footer from './components/Footer'
+import ChatTitle from './components/ChatTitle'
+
+import {
+  outContainer
+} from "./style"
+
+
 
 export const Context = createContext<{
   typer: boolean,
@@ -34,7 +41,7 @@ const App: FC = () => {
     const innerHeight = window.innerHeight
 
     if (contentRef.current) {
-      setContentDivHeight(`${innerHeight - 78}px`)
+      setContentDivHeight(`${innerHeight - 82}px`)
     }
   }, [])
 
@@ -89,41 +96,29 @@ const App: FC = () => {
 
   return (
     <Context.Provider value={{typer, loading, setTyper, setLoading}}>
-      <div className="vh-100 fixed-top">
+      <div className={outContainer}>
+        <ChatTitle />
+        <div className="flex-1">
+          {/* top：46px */}
+          <TopBar />
 
-        {/* Top nav */}
-        <TopBar />
-
-        {/* content */}
-        <div style={{height: contentDivHeight}}
-          className="bg-info bg-opacity-10 overflow-hidden"
-        >
-          <div
-            ref={contentRef}
-            style={{height: "100%", position: "relative"}}
-            className="container border d-flex flex-column pb-2"
-          >
-            <Content cRef={cRef} dialog={msg}/>
-            <SendInput loading={loading} onSubmit={onSubmit} />
-            <span onClick={scrollButtm}>
-              <i className="bi bi-arrow-down-circle-fill text-primary down-icon"></i>
-            </span>
+          {/* main */}
+          <div style={{height: contentDivHeight}} className="bg-gray-50 px-12">
+            <div
+              ref={contentRef}
+              className="flex flex-col pb-4 relative h-full"
+            >
+              <Content cRef={cRef} dialog={msg}/>
+              <SendInput loading={loading} onSubmit={onSubmit} />
+            </div>
           </div>
-        </div>
 
-        {/* Footer */}
-        <Footer />
+          {/* footer：36px */}
+          <Footer />
+        </div>
       </div>
     </Context.Provider>
   )
 }
 
 export default App
-
-/**
- * heder: 42px
- * footer: 36px
- * inputSearch: 40px
- * 
- * total: 112px
- */

@@ -1,8 +1,12 @@
 import { FC, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
-import './content.css'
+import Send from '../icon/Send'
+import ArrowPath from '../icon/ArrowPath'
+
+import 'react-toastify/dist/ReactToastify.css'
+import { input } from '../style'
+
 interface SendInputProps {
   loading: boolean
   onSubmit: (value: string) => void 
@@ -12,14 +16,31 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
   const [value, setValue] = useState<string>("")
 
   const emitClick = () => {
-    if(value.trim() === "") return toast("难道你就没有什么事吗？")
+    if(value.trim() === "") return toast("请输入您要提问的问题？")
     
     onSubmit(value.trim())
     setValue("")
   }
 
 	return (
-		<div style={{ height: "40px" }} className="mx-auto w-100">
+		<>
+      <div style={{height: "40px"}} className="w-full relative">
+        <input
+          disabled={loading}
+          value={value}
+          placeholder="来都来了，说点什么吧~"
+          className={input}
+          onChange={event => setValue(event.target.value)}
+          onKeyUp={e => {
+            if (e.key === "Enter") emitClick()
+          }}
+        />
+        {
+          loading ? <ArrowPath /> : <Send click={emitClick} /> 
+        }
+      </div>
+
+      {/* Empty message toast */}
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -32,42 +53,7 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
         pauseOnHover
         theme="colored"
       />
-      <div className="d-flex" role="search">
-        <input
-          disabled={loading}
-          type="text"
-          value={value}
-          aria-label="Search"
-          placeholder="来都来了，说点什么吧~"
-          className="form-control form-control-sm"
-          onChange={event => setValue(event.target.value)}
-          onKeyUp={e => {
-            if (e.key === "Enter") emitClick()
-          }}
-        />
-        {
-          loading
-          ? (
-            <button className="btn btn-primary ms-2 text-nowrap" type="button" disabled>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-              <span className="ms-2">请稍等</span>
-            </button>
-          )
-          :
-          (
-            <button
-              className="btn ms-2 d-flex text-nowrap btn-primary w-300"
-              onClick={emitClick}
-              disabled={loading}
-            >
-              <i className="bi bi-send"></i>
-              <span className="ms-2 send-text">发送</span>
-            </button>
-          )
-        }
-       
-      </div>
-    </div>
+    </>
 	)
 }
 

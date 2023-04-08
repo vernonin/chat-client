@@ -29,13 +29,13 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 	}
 
 	useImperativeHandle(cRef, () => ({
-		scrollBottm: () => {
+		scrollBottm: () => {	
 			scrollBottm()
 		}
 	}))
 
 	return (
-		<div ref={divRef} style={{ flex: "1", position: "relative" }} className="content-h overflow-auto pb-2">
+		<div ref={divRef} className="flex-1 relative content-h overflow-auto pb-2">
 			<p style={{height: '0.25rem'}}></p>
 			{
 				dialog.map((d, i) => (
