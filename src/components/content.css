@@ -2,21 +2,6 @@
 	height: 75vh;
 	scroll-behavior: smooth;
 }
-.footer {
-	font-size: 0.45rem;
-}
-.down-icon {
-	position: absolute;
-	cursor: pointer;
-	right: 18px;
-	bottom: 72px;
-	height: auto;
-	padding: 0 .4rem;
-	border-radius: 30%;
-	font-size: 1.5rem;
-	background-color: rgba(191, 245, 247, 0.3);
-	z-index: 9999;
-}
 .chat-item {
 	max-width: 100%;
 	overflow-y: scroll;
@@ -25,15 +10,4 @@
 .content-h::-webkit-scrollbar,
 .chat-item::-webkit-scrollbar {
 	display: none;
-}
-
-@media (max-width: 576px) {
-
-	.content-h::-webkit-scrollbar {
-		display: none;
-	}
-
-	.send-tex {
-		display: none;
-	}
 }

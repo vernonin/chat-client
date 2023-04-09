@@ -39,7 +39,10 @@ const LeftChat: FC<LeftChatProps> = ({
 
 
 	return (
-		<div ref={isLastEle ? lastEleRef : null} className={`flex mt-2 chat-item ${role === 'user' ? 'flex-row-reverse' : ''}`}>
+		<div
+			ref={isLastEle ? lastEleRef : null}
+			className={`flex mt-2 chat-item dark:text-white ${role === 'user' ? 'flex-row-reverse' : ''}`}
+		>
 			<img style={style} className="rounded-lg" src={role === 'user' ? '/user.png' : '/gpt.png'} />
 			<div className={role === 'user' ? 'me-2 text-right' : 'ms-2'}>
 				<p
@@ -48,8 +51,8 @@ const LeftChat: FC<LeftChatProps> = ({
 				>{ date }</p>
 				<div
 					style={{display: 'inline-block'}}
-					className={`lh-sm border rounded-lg p-2
-						${role === 'user' ? 'bg-blue-100' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200'}`
+					className={`lh-sm border dark:border-gray-500 rounded-lg p-2
+						${role === 'user' ? 'bg-blue-100 dark:bg-green-500' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-400'}`
 					}
 				>
 					{

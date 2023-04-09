@@ -103,7 +103,7 @@ const App: FC = () => {
           <TopBar />
 
           {/* main */}
-          <div style={{height: contentDivHeight}} className="bg-gray-50 px-12">
+          <div style={{height: contentDivHeight}} className="bg-gray-50 dark:bg-gray-500 px-2 lg:px-12 md:px-6">
             <div
               ref={contentRef}
               className="flex flex-col pb-4 relative h-full"
