@@ -3,12 +3,14 @@ import { nanoid } from 'nanoid'
 
 import request from './utils/request'
 import getCurrentDate from './utils/getCurrentDate'
+import useTheme from './hooks/useTheme'
 
 import TopBar from './components/TopBar'
 import Content, { IMessage } from './components/Content'
 import SendInput from './components/SendInput'
 import Footer from './components/Footer'
 import ChatTitle from './components/ChatTitle'
+
 
 import {
   outContainer
@@ -19,6 +21,8 @@ import {
 export const Context = createContext<{
   typer: boolean,
   loading: boolean,
+  theme: 'light' | 'dark'
+  changeTheme: () => void
   setTyper: (status: boolean) => void
   setLoading: (status: boolean) => void
 } | null>(null)
@@ -28,6 +32,7 @@ const App: FC = () => {
   const [contentDivHeight, setContentDivHeight] = useState('500px')
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [theme, changeTheme] = useTheme()
   const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{scrollBottm: () => void}>(null)
@@ -95,7 +100,7 @@ const App: FC = () => {
   }
 
   return (
-    <Context.Provider value={{typer, loading, setTyper, setLoading}}>
+    <Context.Provider value={{typer, loading, theme, changeTheme, setTyper, setLoading}}>
       <div className={outContainer}>
         <ChatTitle />
         <div className="flex-1">
@@ -103,7 +108,7 @@ const App: FC = () => {
           <TopBar />
 
           {/* main */}
-          <div style={{height: contentDivHeight}} className="bg-gray-50 dark:bg-gray-500 px-2 lg:px-12 md:px-6">
+          <div style={{height: contentDivHeight}} className="bg-gray-100 dark:bg-gray-600 px-2 lg:px-12 md:px-6">
             <div
               ref={contentRef}
               className="flex flex-col pb-4 relative h-full"

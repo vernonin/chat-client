@@ -41,7 +41,7 @@ const LeftChat: FC<LeftChatProps> = ({
 	return (
 		<div
 			ref={isLastEle ? lastEleRef : null}
-			className={`flex mt-2 chat-item dark:text-white ${role === 'user' ? 'flex-row-reverse' : ''}`}
+			className={`flex mt-2 chat-item dark:text-gray-100 ${role === 'user' ? 'flex-row-reverse' : ''}`}
 		>
 			<img style={style} className="rounded-lg" src={role === 'user' ? '/user.png' : '/gpt.png'} />
 			<div className={role === 'user' ? 'me-2 text-right' : 'ms-2'}>

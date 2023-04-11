@@ -4,8 +4,8 @@ export const outContainer = `
 `
 
 export const topBar = `
-	flex justify-between items-center bg-gray-100 px-2 lg:px-12 md:px-6
-	dark:bg-gray-600 dark:text-white
+	flex justify-between items-center bg-indigo-100 px-2 lg:px-12 md:px-6
+	dark:bg-gray-800 dark:text-white
 `
 
 /**
@@ -32,8 +32,8 @@ export const titleItem = `
  * 底部局域
  */
 export const footer = `
-	bg-gray-800 text-center text-white text-sm
-	dark:bg-gray-200 dark:text-black
+	bg-gray-200 text-center text-black text-sm
+	dark:bg-gray-900 dark:text-white
 `
 
 
