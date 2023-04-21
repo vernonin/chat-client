@@ -23,3 +23,20 @@
 .trash {
 	display: none;
 }
+
+.outer {
+	width: calc(100vw + 300px);
+	overflow: hidden;
+	box-sizing: border-box;
+	transition: all .3s;
+	position: fixed;
+	display: flex;
+}
+
+.outer-translateX {
+	transform: translateX(-70vw);
+}
+
+::-webkit-scrollbar {
+	display: none;
+}

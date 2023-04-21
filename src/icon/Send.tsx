@@ -7,7 +7,7 @@ interface SendProps {
 const Send: FC<SendProps> = ({ click }) => {
 	return (
 		<div
-			className="transform scale-110 cursor-pointer flex items-center absolute right-2 lg:right-6 inset-y-0"
+			className="dark:text-white transform scale-110 cursor-pointer flex items-center absolute right-2 lg:right-6 inset-y-0"
 			onClick={click}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

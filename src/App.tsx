@@ -19,8 +19,9 @@ import {
 
 
 export const Context = createContext<{
-  typer: boolean,
-  loading: boolean,
+  typer: boolean
+  loading: boolean
+  showTopic: boolean
   theme: 'light' | 'dark'
   changeTheme: () => void
   setTyper: (status: boolean) => void
@@ -29,6 +30,7 @@ export const Context = createContext<{
 
 
 const App: FC = () => {
+  const [innerHeight, setInnerHeight] = useState("100vh")
   const [contentDivHeight, setContentDivHeight] = useState('500px')
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -36,6 +38,10 @@ const App: FC = () => {
   const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{scrollBottm: () => void}>(null)
+
+  // 移动端下是否显示聊天标题
+  const [showTopic, setShowTopic] = useState(false)
+
 
   useEffect(() => {
     cRef.current?.scrollBottm()
@@ -45,6 +51,8 @@ const App: FC = () => {
     // 获取浏览器总高度，在减去头部（42px）和底部（36px）的区域
     const innerHeight = window.innerHeight
 
+    setInnerHeight(`${innerHeight}px`)
+
     if (contentRef.current) {
       setContentDivHeight(`${innerHeight - 82}px`)
     }
@@ -52,6 +60,10 @@ const App: FC = () => {
 
   const scrollButtm = () => {
     cRef.current?.scrollBottm()
+  }
+
+  const handleAdd = () => {
+    setShowTopic(showTopic => !showTopic)
   }
 
   const setStroage = (data: IMessage): IMessage[] => {
@@ -100,26 +112,34 @@ const App: FC = () => {
   }
 
   return (
-    <Context.Provider value={{typer, loading, theme, changeTheme, setTyper, setLoading}}>
-      <div className={outContainer}>
-        <ChatTitle />
-        <div className="flex-1">
-          {/* top：46px */}
-          <TopBar />
-
-          {/* main */}
-          <div style={{height: contentDivHeight}} className="bg-gray-100 dark:bg-gray-600 px-2 lg:px-12 md:px-6">
-            <div
-              ref={contentRef}
-              className="flex flex-col pb-4 relative h-full"
-            >
-              <Content cRef={cRef} dialog={msg}/>
-              <SendInput loading={loading} onSubmit={onSubmit} />
-            </div>
+    <Context.Provider value={{typer, loading, showTopic, theme, changeTheme, setTyper, setLoading}}>
+      <div style={{height: innerHeight}} className={`outer ${showTopic ? 'outer-translateX' : ''}`}>
+        <div style={{height: '100vh', width: "100vw", display: "flex"}} className={outContainer}>
+          <div style={{width: "270px"}} className="hidden sm:block">
+            <ChatTitle />
           </div>
+          <div style={{flex: 1}} className="">
+            {/* top：46px */}
+            <TopBar onAdd={handleAdd}/>
 
-          {/* footer：36px */}
-          <Footer />
+            {/* main */}
+            <div style={{height: contentDivHeight}} className="bg-gray-100 dark:bg-gray-700 px-2 lg:px-12 md:px-6">
+              <div
+                ref={contentRef}
+                className="flex flex-col pb-4 relative h-full"
+              >
+                <Content cRef={cRef} dialog={msg}/>
+                <SendInput loading={loading} onSubmit={onSubmit} />
+              </div>
+            </div>
+
+            {/* footer：36px */}
+            <Footer />
+          </div>
+        </div>
+
+        <div style={{width: "300px"}}>
+          <ChatTitle />
         </div>
       </div>
     </Context.Provider>

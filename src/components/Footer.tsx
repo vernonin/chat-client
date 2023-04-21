@@ -8,7 +8,7 @@ const Footer: FC = () => {
 			style={{height: "36px", lineHeight: "36px"}}
 			className={footer}
 		>
-			&copy;&nbsp;广州万笙科技有限公司 | gpt-3.5-turbo-0301
+			&copy;&nbsp;广州万笙科技有限公司
 		</div>
 	)
 }

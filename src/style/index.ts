@@ -1,10 +1,8 @@
 
-export const outContainer = `
-	w-screen h-screen flex
-`
+export const outContainer = ``
 
 export const topBar = `
-	flex justify-between items-center bg-indigo-100 px-2 lg:px-12 md:px-6
+	flex justify-between items-center bg-indigo-50 px-2 lg:px-12 md:px-6
 	dark:bg-gray-800 dark:text-white
 `
 
@@ -12,9 +10,8 @@ export const topBar = `
  * 标题区域
  */
 export const chatTitle = `
-	h-full bg-indigo-100 w-64 divide-y divide-black divide-opacity-50
-	dark:bg-gray-800 dark:divide-white
-	hidden sm:block
+	bg-purple-100 divide-y divide-black divide-opacity-50
+	dark:bg-gray-900 dark:divide-white
 `
 export const chatLogo = `
 	text-lg font-bold text-center flex items-center justify-center
@@ -32,8 +29,8 @@ export const titleItem = `
  * 底部局域
  */
 export const footer = `
-	bg-gray-200 text-center text-black text-sm
-	dark:bg-gray-900 dark:text-white
+	bg-purple-50 text-center text-black text-sm
+	dark:bg-gray-800 dark:text-white
 `
 
 
@@ -44,5 +41,6 @@ export const footer = `
 export const input = `
 	w-full h-10 rounded border-2 pl-4 lg:pr-20 pr-12
 	focus:outline-none focus:ring focus:border-blue-100
-	dark:bg-gray-300 dark:text-gray-900
+
+	dark:bg-gray-400 dark:text-gray-900 dark:text-white dark:border-gray-300
 `

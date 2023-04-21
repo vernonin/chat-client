@@ -9,7 +9,7 @@ import '../style/style.css'
 
 const ChatTitle: FC = () => {
 	return (
-		<div className={chatTitle}>
+		<div style={{width: "100%", height: "100vh"}} className={chatTitle}>
 			<div style={{height: "46px"}} className={chatLogo}>
 				<Logo />
 				<span className="ml-2 tracking-widest">聊天助手</span>
