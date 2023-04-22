@@ -16,3 +16,10 @@ export default async function (data: IData) {
 
 	return await result.json()
 }
+
+
+export const Event = new EventSource("/chat/v2");
+
+Event.onmessage = (message) => {
+	console.log('=====', message)
+}

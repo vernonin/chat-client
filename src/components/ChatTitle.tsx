@@ -6,6 +6,7 @@ import Trash from '../icon/Trash'
 
 import { chatTitle, chatLogo, titleItem } from '../style'
 import '../style/style.css'
+import Add from '../icon/Add'
 
 const ChatTitle: FC = () => {
 	return (
@@ -16,8 +17,22 @@ const ChatTitle: FC = () => {
 			</div>
 			<div className="px-3">
 				<div className={titleItem}>
-					<Chat />
+					<span className="scale-75"><Add /></span>
 					<div className="ml-1 break-normal truncate">新建聊天</div>
+				</div>
+				<div className={titleItem}>
+					<Chat />
+					<div className="ml-1 break-normal truncate">你可以干嘛</div>
+					<div className="absolute inset-y-0 right-2 trash">
+						<Trash />
+					</div>
+				</div>
+				<div className={titleItem}>
+					<Chat />
+					<div className="ml-1 break-normal truncate">你可以干嘛</div>
+					<div className="absolute inset-y-0 right-2 trash">
+						<Trash />
+					</div>
 				</div>
 				<div className={titleItem}>
 					<Chat />

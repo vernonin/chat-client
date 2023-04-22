@@ -35,7 +35,7 @@ const TopBar: FC<TopBarProps> = ({ onAdd }) => {
 						: <Sun />
 					}
 				</div>
-				<span className={`mx-2 transition-all duration-300 ${context?.showTopic ? 'rotate-45' : ''}`} onClick={onAdd}>
+				<span className={`transition-all mr-2 duration-300 sm:hidden ${context?.showTopic ? 'rotate-45' : ''}`} onClick={onAdd}>
 					<Add />
 				</span>
 			</div>

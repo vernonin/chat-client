@@ -34,8 +34,19 @@
 }
 
 .outer-translateX {
-	transform: translateX(-70vw);
+	transform: translateX(-300px);
 }
+
+.code-block {
+	position: relative;
+}
+
+.code-block .copy-button {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.8rem;
+}
+
 
 ::-webkit-scrollbar {
 	display: none;
