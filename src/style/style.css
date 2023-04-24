@@ -47,6 +47,13 @@
 	right: 0.8rem;
 }
 
+.avatar {
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	margin-bottom: 0.2rem;
+}
+
 
 ::-webkit-scrollbar {
 	display: none;

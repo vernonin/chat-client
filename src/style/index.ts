@@ -9,7 +9,7 @@ export const topBar = `
 /**
  * 标题区域
  */
-export const chatTitle = `
+export const chatTitle = ` flex flex-col
 	bg-blue-100 divide-y divide-black divide-opacity-50
 	dark:bg-gray-900 dark:divide-white
 `

@@ -3,6 +3,7 @@ import { useRef, forwardRef, useImperativeHandle, ForwardRefRenderFunction } fro
 import ChatItem from './ChatItem'
 
 import './content.css'
+import Readme from './Readme'
 
 export interface IMessage {
 	key: string
@@ -36,9 +37,8 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 
 	return (
 		<div ref={divRef} className="flex-1 relative content-h overflow-auto pb-2">
-			<p style={{height: '0.25rem'}}></p>
 			{
-				dialog.map((d, i) => (
+				dialog.length > 0 && dialog.map((d, i) => (
 					<ChatItem
 						key={d.key}
 						role={d.role}
@@ -48,7 +48,9 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 					/>
 				))
 			}
-
+			{
+				dialog.length === 0 && <Readme />
+			}
 		</div>
 	)
 }

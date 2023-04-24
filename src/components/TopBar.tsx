@@ -24,7 +24,8 @@ const TopBar: FC<TopBarProps> = ({ onAdd }) => {
 				{/* 打算做广告展示区 */}
 			</div>
 			<div className="sm:hidden flex">
-				<Logo />
+				{/* <Logo /> */}
+				<img style={{height: "18px", width: "18px"}} src="/ai.png" alt="" />
 				<span className="ml-2 tracking-widest">聊天助手</span>
 			</div>
 			<div className="flex">
