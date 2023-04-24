@@ -1,12 +1,11 @@
 import { FC } from 'react'
 
-import Logo from '../icon/Logo'
+import Add from '../icon/Add'
 import Chat from '../icon/Chat'
 import Trash from '../icon/Trash'
 
 import { chatTitle, chatLogo, titleItem } from '../style'
 import '../style/style.css'
-import Add from '../icon/Add'
 
 const ChatTitle: FC = () => {
 	return (
@@ -49,20 +48,28 @@ const ChatTitle: FC = () => {
 			>
 				<div>
 					<div className="text-center text-base font-bold mb-2">主要成员</div>
-					<div className="flex justify-around">
-						<div className="flex flex-col items-center text-center text-gray-700 dark:text-gray-300 underline font-semibold">
-							<img className="avatar border border-2 border-gray-600 dark:border-white border-double" src="/huanglin.jpg" alt="谢胜瑜" />
-							黄琳 前端-React
+					<div className="flex justify-around ">
+						<div className="flex flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
+							<div className="avatar border border-2 border-gray-600 dark:border-white border-double">
+								<img src="/huanglin.jpg" alt="谢胜瑜" />
+							</div>
+							黄  琳
 						</div>
-						<div className="flex flex-col items-center text-center text-gray-700 dark:text-gray-300 underline font-semibold">
-							<img className="avatar border border-2 border-gray-600 dark:border-white border-double" src="/xieshengyu.jpg" alt="谢胜瑜" />
-							谢胜瑜 后端-Java
+						<div className="flex flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
+							<div className="avatar border border-2 border-gray-600 dark:border-white border-double">
+								<img src="/xieshengyu.jpg" alt="谢胜瑜" />
+							</div>
+							谢胜瑜
 						</div>
 					</div>
 				</div>
 				<div>
-					<div className="leading-8 border-b border-gray-400">微信：auin244</div>
-					<div className="leading-8 border-b border-gray-400">邮箱：huanglin824@gmail.com</div>
+					<div className="leading-8 border-b border-gray-400">
+						邮箱1：huanglin824@gmail.com
+					</div>
+					<div className="leading-8 border-b border-gray-400">
+						邮箱2：xieshengyu040@gmail.com
+					</div>
 				</div>
 			</div>
 		</div>

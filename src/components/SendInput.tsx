@@ -28,7 +28,7 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
         <input
           disabled={loading}
           value={value}
-          placeholder="来都来了，说点什么吧~"
+          placeholder="请输入你的内容~"
           className={input}
           onChange={event => setValue(event.target.value)}
           onKeyUp={e => {

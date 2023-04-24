@@ -40,7 +40,7 @@ export const footer = `
  */
 export const input = `
 	w-full h-10 rounded border-2 pl-4 lg:pr-20 pr-12 bg-gray-100
-	focus:outline-none focus:ring focus:border-blue-100
+	focus:outline-none focus:ring focus:border-blue-100 placeholder-gray-500
 
-	dark:bg-gray-400 dark:text-gray-900 dark:text-white dark:border-gray-300
+	dark:bg-gray-400 dark:text-gray-900 dark:text-white dark:border-gray-300 dark:placeholder-gray-100
 `
