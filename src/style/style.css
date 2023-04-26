@@ -67,3 +67,34 @@
 ::-webkit-scrollbar {
 	display: none;
 }
+
+/* .sdafsd:last-child {
+	position: relative;
+} */
+/* .sdafsd:last-child::after {
+	position: absolute;
+	bottom: 0.35rem;
+	right: 0.85rem;
+	content: "";
+	width: 10px;
+	height: 4px;
+	display: block;
+	background-color: black;
+	color: orange;
+	margin-bottom: 4px;
+	margin-left: 2px;
+	animation-duration: 250ms;
+	animation-name: fade;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+} */
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

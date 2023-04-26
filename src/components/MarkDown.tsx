@@ -54,13 +54,6 @@ interface MarkDownProps {
 }
 
 const MarkDown: FC<MarkDownProps> = ({ content }) => {
-	const [message, setMessage] = useState('')
-	const context = useContext(Context)
-
-
-	useEffect(() =>{
-	}, [])
-
 
 	return (
 		<ReactMarkdown
@@ -70,15 +63,16 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 				code({node, inline, className, children, ...props}) {
 					const match = /language-(\w+)/.exec(className || '')
 
-					return !inline && match ? 
+					return !inline && match
+					? 
 					<CodeBlock
 						children={children}
 						match={match}
-					/> : (
-						<code className={className} {...props}>
-							{children}
-						</code>
-					)
+					/>
+					:
+					<code className={className} {...props}>
+						{children}
+					</code>
 				}
 			}}
 		/>

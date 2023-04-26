@@ -18,8 +18,34 @@ export default async function (data: IData) {
 }
 
 
-export const Event = new EventSource("/chat/v2");
-
-Event.onmessage = (message) => {
-	console.log('=====', message)
+type IFc = {
+	message: string
+	sessionId?: string
+	callBack: (value: string) => void
 }
+
+export const createSource = ({
+	message,
+	sessionId,
+	callBack
+}: IFc) => {
+	return new Promise<void>((resolve, resject) => {
+		const Event = new EventSource(`/chat/v2?sessionId=${sessionId}&message=${message}`);
+
+		Event.onmessage = (message) => {
+			console.log(message.data)
+			callBack(message.data)
+		}
+
+		Event.onopen = () => {
+			console.log('连接已建立！')
+		}
+
+		Event.onerror = (e) => {
+			Event.close()
+			resolve()
+		}
+	})
+}
+
+

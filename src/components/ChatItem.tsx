@@ -52,7 +52,7 @@ const LeftChat: FC<LeftChatProps> = ({
 				<div
 					style={{display: 'inline-block'}}
 					className={`lh-sm border dark:border-gray-500 rounded-lg py-1.5 px-2.5
-						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600'}`
+						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600 sdafsd'}`
 					}
 				>
 					{

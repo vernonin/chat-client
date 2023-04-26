@@ -1,7 +1,7 @@
 import { FC, useState, createContext,useEffect, useRef } from 'react'
 import { nanoid } from 'nanoid'
 
-import request from './utils/request'
+import request, { createSource } from './utils/request'
 import getCurrentDate from './utils/getCurrentDate'
 import useTheme from './hooks/useTheme'
 
@@ -35,9 +35,12 @@ const App: FC = () => {
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
   const [theme, changeTheme] = useTheme()
-  const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
+  // const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{scrollBottm: () => void}>(null)
+
+  // 聊天信息
+  const [messages, setMessages] = useState<IMessage[]>([])
 
   // 移动端下是否显示聊天标题
   const [showTopic, setShowTopic] = useState(false)
@@ -63,50 +66,69 @@ const App: FC = () => {
     setShowTopic(showTopic => !showTopic)
   }
 
-  const setStroage = (data: IMessage): IMessage[] => {
-    const sMess = JSON.parse(localStorage.getItem('message') || "[]")
-    const message = [...sMess, data]
-    localStorage.setItem('message', JSON.stringify(message))
+  // const setStroage = (data: IMessage): IMessage[] => {
+  //   const sMess = JSON.parse(localStorage.getItem('message') || "[]")
+  //   const message = [...sMess, data]
+  //   localStorage.setItem('message', JSON.stringify(message))
 
-    return message
-  }
-
-  const onSubmit = async (value: string) => {
-
-    setTyper(true)
-    setLoading(true)
-    setMsg(setStroage({key: nanoid(),role: 'user',date: getCurrentDate(),message: value}))
-
-    try {
-
-      const session: string = localStorage.getItem('session') || '';
-
-      let result = await request({
-        message: value, 
-        sessionId:  session
-      })
+  //   return message
+  // }
 
 
-      if (result.sessionId) {
-        localStorage.setItem('session', result.sessionId)
+  const receiveData = (value: string) => {
+
+
+    setMessages(msg => {
+      const length = msg.length
+
+      if (msg[length - 1].role !== 'assistant') {
+        return [...msg, {
+          key: nanoid(),
+          role: 'assistant',
+          date: getCurrentDate(),
+          message: value
+        }]
       }
 
-      setMsg(setStroage({
-        key: nanoid(),
-        role: 'assistant',
-        date: getCurrentDate(),
-        message: result.message
-      }))
+
+      let newMessages = [...msg]
+      newMessages[length - 1].message = value
+
+      return newMessages
+    })
+  }
+
+
+  /// 用户输入回车
+  const onSubmit = async (value: string) => {
+
+    setLoading(true)
+
+    setMessages(msg => [...msg, {
+      key: nanoid(),
+      role: 'user',
+      date: getCurrentDate(),
+      message: value
+    }])
+
+
+
+    try {
+      await createSource({
+        message: value,
+        callBack: receiveData
+      })
     }
+
     catch (error){
-      setMsg(setStroage({
+      setMessages(msg => [...msg, {
         key: nanoid(),
         role: 'error',
         date: getCurrentDate(),
         message: (error as Error).message
-      }))
-      setTyper(false)
+      }])
     }
+
     setLoading(false)
   }
 
@@ -126,14 +148,14 @@ const App: FC = () => {
             {/* main */}
             <div
               style={{height: contentDivHeight}}
-              className="dark:bg-gray-700 px-2 lg:px-12 md:px-6"
+              className={`dark:bg-gray-700 px-2 lg:px-12 md:px-6 ${showTopic ? 'opacity-50': ''}`}
               onClick={() => setShowTopic(false)}
             >
               <div
                 ref={contentRef}
                 className="flex flex-col pb-4 relative h-full"
               >
-                <Content cRef={cRef} dialog={msg}/>
+                <Content cRef={cRef} dialog={messages}/>
                 <SendInput loading={loading} onSubmit={onSubmit} />
               </div>
             </div>
