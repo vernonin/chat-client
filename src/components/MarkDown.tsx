@@ -1,13 +1,12 @@
-import { FC, useState, useEffect, useContext } from 'react'
-import ReactMarkdown from 'react-markdown'
+import React, { FC, useContext, useState } from 'react';
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import remarkGfm from 'remark-gfm'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { vscDarkPlus, duotoneLight, dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula, duotoneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
 
 // 打字效果
-import EasyTyper from 'easy-typer-js'
-import { Context } from '../App'
+import { Context } from '../App';
 import Copy from '../icon/Copy';
 
 
@@ -20,21 +19,22 @@ const CodeBlock = ({ children, match }: {
 	const context = useContext(Context)
 	const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1500);
-  };
+	const handleCopy = () => {
+		setCopied(true);
+		setTimeout(() => {
+			setCopied(false);
+		}, 1500);
+	};
 
 	return (
 		<div className="code-block">
 			<CopyToClipboard text={String(children)} onCopy={handleCopy}>
-        <button className="copy-button">
-          {copied ? "Copied!" : <Copy />}
-        </button>
-      </CopyToClipboard>
+				<button className="copy-button">
+					{copied ? "Copied!" : <Copy />}
+				</button>
+			</CopyToClipboard>
 			<SyntaxHighlighter
+				// eslint-disable-next-line react/no-children-prop
 				children={String(children).replace(/\n$/, '')}
 				style={context?.theme === 'dark' ? dracula : duotoneLight}
 				language={match[1]}
@@ -57,22 +57,24 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 
 	return (
 		<ReactMarkdown
+			// eslint-disable-next-line react/no-children-prop
 			children={content}
 			remarkPlugins={[remarkGfm]}
 			components={{
-				code({node, inline, className, children, ...props}) {
+				code({ node, inline, className, children, ...props }) {
 					const match = /language-(\w+)/.exec(className || '')
 
 					return !inline && match
-					? 
-					<CodeBlock
-						children={children}
-						match={match}
-					/>
-					:
-					<code className={className} {...props}>
-						{children}
-					</code>
+						?
+						<CodeBlock
+							// eslint-disable-next-line react/no-children-prop
+							children={children}
+							match={match}
+						/>
+						:
+						<code className={className} {...props}>
+							{children}
+						</code>
 				}
 			}}
 		/>

@@ -1,4 +1,4 @@
-import { useRef, forwardRef, useImperativeHandle, ForwardRefRenderFunction } from 'react'
+import { forwardRef, ForwardRefRenderFunction, useImperativeHandle, useRef } from 'react'
 
 import ChatItem from './ChatItem'
 
@@ -30,7 +30,7 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 	}
 
 	useImperativeHandle(cRef, () => ({
-		scrollBottm: () => {	
+		scrollBottm: () => {
 			scrollBottm()
 		}
 	}))
@@ -44,7 +44,7 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 						role={d.role}
 						date={d.date}
 						content={d.message}
-						isLastEle={i === dialog.length -1 ? true : false}
+						isLastEle={i === dialog.length - 1 ? true : false}
 					/>
 				))
 			}

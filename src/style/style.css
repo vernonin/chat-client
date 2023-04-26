@@ -79,7 +79,6 @@
 	width: 10px;
 	height: 4px;
 	display: block;
-	background-color: black;
 	color: orange;
 	margin-bottom: 4px;
 	margin-left: 2px;
@@ -88,13 +87,23 @@
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
 } */
+.cursor {
+	display: inline-block;
+  width: 10px;
+	height: 4px;
+	transform: translateY(0.2rem);
+	background-color: black;
+	animation: cursor-blink 0.4s infinite;
+}
 
-@keyframes fade {
-  from {
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
     opacity: 1;
   }
-
-  to {
+  100% {
     opacity: 0;
   }
 }

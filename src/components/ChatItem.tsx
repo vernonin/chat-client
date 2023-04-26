@@ -1,4 +1,4 @@
-import { FC,useEffect,useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import MarkDown from './MarkDown'
 
 /**
@@ -27,7 +27,7 @@ const LeftChat: FC<LeftChatProps> = ({
 	const lastEleRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		let timer = setTimeout(() => {
+		const timer = setTimeout(() => {
 			isLastEle && lastEleRef.current?.scrollIntoView()
 		}, 0)
 
@@ -40,7 +40,7 @@ const LeftChat: FC<LeftChatProps> = ({
 
 	return (
 		<div
-			style={{ fontSize: '0.94rem'}}
+			style={{ fontSize: '0.94rem' }}
 			ref={isLastEle ? lastEleRef : null}
 			className={`flex overflow-x-scroll mt-2 chat-item dark:text-gray-100 ${role === 'user' ? 'flex-row-reverse' : ''}`}
 		>
@@ -48,15 +48,18 @@ const LeftChat: FC<LeftChatProps> = ({
 			<div className={role === 'user' ? 'me-2 text-right' : 'ms-2'}>
 				<p
 					className={`lh-sm mb-1 text-xs ${role === 'user' ? 'text-end' : ''}`}
-				>{ date }</p>
+				>{date}</p>
 				<div
-					style={{display: 'inline-block'}}
+					style={{ display: 'inline-block' }}
 					className={`lh-sm border dark:border-gray-500 rounded-lg py-1.5 px-2.5
 						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600 sdafsd'}`
 					}
 				>
 					{
-						role === 'user' ? content : <MarkDown content={content}/>
+						role === 'user' ? content : <MarkDown content={content} />
+					}
+					{
+						role === 'assistant' && <span className="cursor bg-gray-900 dark:bg-white"></span>
 					}
 				</div>
 			</div>

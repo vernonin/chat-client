@@ -1,21 +1,20 @@
-import { FC, useState, createContext,useEffect, useRef } from 'react'
 import { nanoid } from 'nanoid'
+import { FC, createContext, useEffect, useRef, useState } from 'react'
 
-import request, { createSource } from './utils/request'
-import getCurrentDate from './utils/getCurrentDate'
 import useTheme from './hooks/useTheme'
+import getCurrentDate from './utils/getCurrentDate'
+import { createSource } from './utils/request'
 
-import TopBar from './components/TopBar'
-import Content, { IMessage } from './components/Content'
-import SendInput from './components/SendInput'
-import Footer from './components/Footer'
 import ChatTitle from './components/ChatTitle'
+import Content, { IMessage } from './components/Content'
+import Footer from './components/Footer'
+import SendInput from './components/SendInput'
+import TopBar from './components/TopBar'
 
 
 import {
   outContainer
 } from "./style"
-
 
 
 export const Context = createContext<{
@@ -37,7 +36,7 @@ const App: FC = () => {
   const [theme, changeTheme] = useTheme()
   // const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
-  const cRef = useRef<{scrollBottm: () => void}>(null)
+  const cRef = useRef<{ scrollBottm: () => void }>(null)
 
   // 聊天信息
   const [messages, setMessages] = useState<IMessage[]>([])
@@ -91,10 +90,10 @@ const App: FC = () => {
       }
 
 
-      let newMessages = [...msg]
-      newMessages[length - 1].message = value
+      // const newMessages = [...msg]
+      msg[length - 1].message = value
 
-      return newMessages
+      return msg
     })
   }
 
@@ -112,7 +111,6 @@ const App: FC = () => {
     }])
 
 
-
     try {
       await createSource({
         message: value,
@@ -120,7 +118,7 @@ const App: FC = () => {
       })
     }
 
-    catch (error){
+    catch (error) {
       setMessages(msg => [...msg, {
         key: nanoid(),
         role: 'error',
@@ -133,29 +131,29 @@ const App: FC = () => {
   }
 
   return (
-    <Context.Provider value={{typer, loading, showTopic, theme, changeTheme, setTyper, setLoading}}>
-      <div style={{height: innerHeight}} className={`outer ${showTopic ? 'outer-translateX' : ''}`}>
+    <Context.Provider value={{ typer, loading, showTopic, theme, changeTheme, setTyper, setLoading }}>
+      <div style={{ height: innerHeight }} className={`outer ${showTopic ? 'outer-translateX' : ''}`}>
 
         {/* 主体 */}
         <div className={outContainer}>
-          <div style={{width: "270px"}} className="hidden sm:block">
+          <div style={{ width: "270px" }} className="hidden sm:block">
             <ChatTitle />
           </div>
-          <div style={{maxWidth: "100vw", flex: 1}}>
+          <div style={{ maxWidth: "100vw", flex: 1 }}>
             {/* top：46px */}
-            <TopBar onAdd={handleAdd}/>
+            <TopBar onAdd={handleAdd} />
 
             {/* main */}
             <div
-              style={{height: contentDivHeight}}
-              className={`dark:bg-gray-700 px-2 lg:px-12 md:px-6 ${showTopic ? 'opacity-50': ''}`}
+              style={{ height: contentDivHeight }}
+              className={`dark:bg-gray-700 px-2 lg:px-12 md:px-6 ${showTopic ? 'opacity-50' : ''}`}
               onClick={() => setShowTopic(false)}
             >
               <div
                 ref={contentRef}
                 className="flex flex-col pb-4 relative h-full"
               >
-                <Content cRef={cRef} dialog={messages}/>
+                <Content cRef={cRef} dialog={messages} />
                 <SendInput loading={loading} onSubmit={onSubmit} />
               </div>
             </div>
@@ -166,7 +164,7 @@ const App: FC = () => {
         </div>
 
         {/* 移动端可见 */}
-        <div style={{width: "300px"}}>
+        <div style={{ width: "300px" }}>
           <ChatTitle />
         </div>
       </div>

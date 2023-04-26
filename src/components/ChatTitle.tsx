@@ -4,18 +4,18 @@ import Add from '../icon/Add'
 import Chat from '../icon/Chat'
 import Trash from '../icon/Trash'
 
-import { chatTitle, chatLogo, titleItem } from '../style'
+import { chatLogo, chatTitle, titleItem } from '../style'
 import '../style/style.css'
 
 const ChatTitle: FC = () => {
 	return (
-		<div style={{width: "100%", height: "100vh"}} className={chatTitle}>
-			<div style={{height: "46px"}} className={chatLogo}>
+		<div style={{ width: "100%", height: "100vh" }} className={chatTitle}>
+			<div style={{ height: "46px" }} className={chatLogo}>
 				{/* <Logo /> */}
-				<img style={{height: "18px", width: "18px"}} src="/ai.png" alt="" />
+				<img style={{ height: "18px", width: "18px" }} src="/ai.png" alt="" />
 				<span className="ml-2 tracking-widest">聊天助手</span>
 			</div>
-			<div style={{flex: 1, overflow: "scroll"}} className="px-3">
+			<div style={{ flex: 1, overflow: "scroll" }} className="px-3">
 				<div className={titleItem}>
 					<span className="scale-75"><Add /></span>
 					<div className="ml-1 break-normal truncate">新建聊天</div>
@@ -43,7 +43,7 @@ const ChatTitle: FC = () => {
 				</div>
 			</div>
 			<div
-				style={{height: "220px"}}
+				style={{ height: "220px" }}
 				className="px-2 py-4 text-sm dark:text-white flex flex-col justify-between"
 			>
 				<div>

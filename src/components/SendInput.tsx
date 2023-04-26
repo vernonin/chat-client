@@ -1,30 +1,30 @@
 import { FC, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
-import Send from '../icon/Send'
 import ArrowPath from '../icon/ArrowPath'
+import Send from '../icon/Send'
 
 import 'react-toastify/dist/ReactToastify.css'
 import { input } from '../style'
 
 interface SendInputProps {
   loading: boolean
-  onSubmit: (value: string) => void 
+  onSubmit: (value: string) => void
 }
 
 const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
   const [value, setValue] = useState<string>("")
 
   const emitClick = () => {
-    if(value.trim() === "") return toast("请输入您要提问的问题？")
-    
+    if (value.trim() === "") return toast("请输入您要提问的问题？")
+
     onSubmit(value.trim())
     setValue("")
   }
 
-	return (
-		<>
-      <div style={{height: "40px"}} className="w-full relative">
+  return (
+    <>
+      <div style={{ height: "40px" }} className="w-full relative">
         <input
           disabled={loading}
           value={value}
@@ -36,7 +36,7 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
           }}
         />
         {
-          loading ? <ArrowPath /> : <Send click={emitClick} /> 
+          loading ? <ArrowPath /> : <Send click={emitClick} />
         }
       </div>
 
@@ -54,7 +54,7 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
         theme="colored"
       />
     </>
-	)
+  )
 }
 
 export default SendInput
