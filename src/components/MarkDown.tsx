@@ -59,6 +59,7 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 		<ReactMarkdown
 			// eslint-disable-next-line react/no-children-prop
 			children={content}
+			skipHtml={true}
 			remarkPlugins={[remarkGfm]}
 			components={{
 				code({ node, inline, className, children, ...props }) {

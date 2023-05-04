@@ -3,7 +3,6 @@ import { FC, createContext, useEffect, useRef, useState } from 'react'
 
 import useTheme from './hooks/useTheme'
 import getCurrentDate from './utils/getCurrentDate'
-import { createSource } from './utils/request'
 
 import ChatTitle from './components/ChatTitle'
 import Content, { IMessage } from './components/Content'
@@ -15,7 +14,10 @@ import TopBar from './components/TopBar'
 import {
   outContainer
 } from "./style"
+import { createSource } from './utils/request'
 
+
+const styleff = "color: red"
 
 export const Context = createContext<{
   typer: boolean
@@ -77,6 +79,7 @@ const App: FC = () => {
   const receiveData = (value: string) => {
 
 
+
     setMessages(msg => {
       const length = msg.length
 
@@ -117,7 +120,6 @@ const App: FC = () => {
         callBack: receiveData
       })
     }
-
     catch (error) {
       setMessages(msg => [...msg, {
         key: nanoid(),

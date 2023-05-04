@@ -12,7 +12,7 @@ export default async function (data: IData) {
 
 	const config = { headers, method: "POST", body: JSON.stringify(data)}
 	
-	let result = await fetch(URL, config)
+	const result = await fetch(URL, config)
 
 	return await result.json()
 }
@@ -33,7 +33,7 @@ export const createSource = ({
 		const Event = new EventSource(`/chat/v2?sessionId=${sessionId}&message=${message}`);
 
 		Event.onmessage = (message) => {
-			console.log(message.data)
+			console.log(message)
 			callBack(message.data)
 		}
 

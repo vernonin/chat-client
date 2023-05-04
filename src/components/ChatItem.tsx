@@ -1,4 +1,5 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useContext, useEffect, useRef } from 'react'
+import { Context } from '../App'
 import MarkDown from './MarkDown'
 
 /**
@@ -24,6 +25,7 @@ const LeftChat: FC<LeftChatProps> = ({
 	isLastEle
 }) => {
 
+	const context = useContext(Context)
 	const lastEleRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -51,15 +53,14 @@ const LeftChat: FC<LeftChatProps> = ({
 				>{date}</p>
 				<div
 					style={{ display: 'inline-block' }}
-					className={`lh-sm border dark:border-gray-500 rounded-lg py-1.5 px-2.5
-						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600 sdafsd'}`
-					}
+					className={`
+						lh-sm border dark:border-gray-500 rounded-lg py-1.5 px-2.5
+						${context?.loading && isLastEle ? 'typing' : ''} 
+						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600 sdafsd'}
+					`}
 				>
 					{
 						role === 'user' ? content : <MarkDown content={content} />
-					}
-					{
-						role === 'assistant' && <span className="cursor bg-gray-900 dark:bg-white"></span>
 					}
 				</div>
 			</div>

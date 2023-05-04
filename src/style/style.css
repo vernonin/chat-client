@@ -68,31 +68,14 @@
 	display: none;
 }
 
-/* .sdafsd:last-child {
-	position: relative;
-} */
-/* .sdafsd:last-child::after {
-	position: absolute;
-	bottom: 0.35rem;
-	right: 0.85rem;
+.typing p:last-of-type::after {
 	content: "";
-	width: 10px;
-	height: 4px;
-	display: block;
-	color: orange;
-	margin-bottom: 4px;
-	margin-left: 2px;
-	animation-duration: 250ms;
-	animation-name: fade;
-	animation-direction: alternate;
-	animation-iteration-count: infinite;
-} */
-.cursor {
 	display: inline-block;
-  width: 10px;
+  width: 0.6rem;
 	height: 4px;
 	transform: translateY(0.2rem);
-	background-color: black;
+	background-color: #a8a8a8;
+	margin-left: 0.2rem;
 	animation: cursor-blink 0.4s infinite;
 }
 
@@ -107,3 +90,4 @@
     opacity: 0;
   }
 }
+
