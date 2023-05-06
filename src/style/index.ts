@@ -1,5 +1,5 @@
 
-export const outContainer = `flex over overflow-hidden w-screen h-screen`
+export const outContainer = `flex over overflow-hidden w-screen`
 
 export const topBar = `
 	flex justify-between items-center bg-blue-50 px-2 lg:px-12 md:px-6

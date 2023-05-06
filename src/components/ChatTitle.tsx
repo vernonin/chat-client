@@ -1,45 +1,43 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
+import { Context } from '../App'
 
 import Add from '../icon/Add'
 import Chat from '../icon/Chat'
 import Trash from '../icon/Trash'
 
+
 import { chatLogo, chatTitle, titleItem } from '../style'
 import '../style/style.css'
 
 const ChatTitle: FC = () => {
+	const context = useContext(Context)
+	
 	return (
-		<div style={{ width: "100%", height: "100vh" }} className={chatTitle}>
+		<div style={{ width: "100%", height: context?.innerHeight }} className={chatTitle}>
 			<div style={{ height: "46px" }} className={chatLogo}>
 				{/* <Logo /> */}
 				<img style={{ height: "18px", width: "18px" }} src="/ai.png" alt="" />
 				<span className="ml-2 tracking-widest">聊天助手</span>
 			</div>
-			<div style={{ flex: 1, overflow: "scroll" }} className="px-3">
-				<div className={titleItem}>
-					<span className="scale-75"><Add /></span>
-					<div className="ml-1 break-normal truncate">新建聊天</div>
-				</div>
-				<div className={titleItem}>
-					<Chat />
-					<div className="ml-1 break-normal truncate">你可以干嘛</div>
-					<div className="absolute inset-y-0 right-2 trash">
-						<Trash />
+			<div style={{ flex: 1, overflow: "hidden" }} className="px-3 flex flex-col">
+				<div >
+					<div className={titleItem}>
+						<span className="scale-75"><Add /></span>
+						<div className="ml-1 break-normal truncate">新建聊天</div>
 					</div>
 				</div>
-				<div className={titleItem}>
-					<Chat />
-					<div className="ml-1 break-normal truncate">你可以干嘛</div>
-					<div className="absolute inset-y-0 right-2 trash">
-						<Trash />
-					</div>
-				</div>
-				<div className={titleItem}>
-					<Chat />
-					<div className="ml-1 break-normal truncate">你可以干嘛</div>
-					<div className="absolute inset-y-0 right-2 trash">
-						<Trash />
-					</div>
+				<div style={{height: "auto",overflow: "scroll"}} className="pb-2">
+					{
+						[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(v => (
+							<div key={v} className={titleItem}>
+								<Chat />
+								<div className="ml-1 mr-8 break-normal truncate">你可以干嘛你佛山店冯楠撒丁奇偶分念佛阿帆</div>
+								<div className="absolute inset-y-0 right-1 trash">
+									<Trash />
+								</div>
+							</div>
+						))
+					}
 				</div>
 			</div>
 			<div

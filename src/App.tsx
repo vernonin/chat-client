@@ -17,13 +17,12 @@ import {
 import { createSource } from './utils/request'
 
 
-const styleff = "color: red"
-
 export const Context = createContext<{
   typer: boolean
   loading: boolean
   showTopic: boolean
   theme: 'light' | 'dark'
+  innerHeight: string
   changeTheme: () => void
   setTyper: (status: boolean) => void
   setLoading: (status: boolean) => void
@@ -31,7 +30,7 @@ export const Context = createContext<{
 
 
 const App: FC = () => {
-  const [innerHeight, setInnerHeight] = useState("100vh")
+  const [innerHeight, setInnerHeight] = useState("900px")
   const [contentDivHeight, setContentDivHeight] = useState('500px')
   const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -133,8 +132,12 @@ const App: FC = () => {
   }
 
   return (
-    <Context.Provider value={{ typer, loading, showTopic, theme, changeTheme, setTyper, setLoading }}>
-      <div style={{ height: innerHeight }} className={`outer ${showTopic ? 'outer-translateX' : ''}`}>
+    <Context.Provider value={{
+      typer, loading, showTopic, theme,
+      innerHeight,
+      changeTheme, setTyper, setLoading
+    }}>
+      <div style={{ height: innerHeight }} className={`outer fixed ${showTopic ? 'outer-translateX' : ''}`}>
 
         {/* 主体 */}
         <div className={outContainer}>
