@@ -15,9 +15,16 @@
 	align-items: center;
 }
 
+.mml-40 {
+	margin-left: 40px;
+}
+.mmr-40 {
+	margin-right: 40px;
+}
+
 .chat-title-item:hover .trash{
-		display: flex;
-		align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .trash {
@@ -94,3 +101,10 @@
   }
 }
 
+
+/* 响应式布局 */
+@media (min-height: 640px) {
+	.trash {
+		display: block;
+	}
+}

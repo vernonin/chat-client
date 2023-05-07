@@ -56,7 +56,7 @@ const LeftChat: FC<LeftChatProps> = ({
 					className={`
 						lh-sm border dark:border-gray-500 rounded-lg py-1.5 px-2.5
 						${context?.loading && isLastEle ? 'typing' : ''} 
-						${role === 'user' ? 'bg-blue-100 dark:bg-gray-400' : role === 'error' ? 'bg-red-100 text-red-500' : 'bg-gray-200 dark:bg-gray-600 sdafsd'}
+						${role === 'user' ? 'bg-blue-100 dark:bg-gray- mml-40' : role === 'error' ? 'bg-red-100 text-red-500 mmr-40' : 'bg-gray-200 dark:bg-gray-600 sdafsd mmr-40'}
 					`}
 				>
 					{

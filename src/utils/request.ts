@@ -30,7 +30,9 @@ export const createSource = ({
 	callBack
 }: IFc) => {
 	return new Promise<void>((resolve, resject) => {
-		const Event = new EventSource(`/chat/v2?sessionId=${sessionId}&message=${message}`);
+		const Event = new EventSource(`/chat/v2?sessionId=${sessionId}&message=${message}`, {
+			withCredentials: true
+		});
 
 		Event.onmessage = (message) => {
 			console.log(message)

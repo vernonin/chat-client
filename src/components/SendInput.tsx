@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
 import ArrowPath from '../icon/ArrowPath'
@@ -13,6 +13,7 @@ interface SendInputProps {
 }
 
 const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState<string>("")
 
   const emitClick = () => {
@@ -22,10 +23,15 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
     setValue("")
   }
 
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
   return (
     <>
       <div style={{ height: "40px" }} className="w-full relative">
         <input
+          ref={inputRef}
           disabled={loading}
           value={value}
           placeholder="请输入你的内容~"

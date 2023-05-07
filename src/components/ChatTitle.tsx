@@ -9,7 +9,10 @@ import Trash from '../icon/Trash'
 import { chatLogo, chatTitle, titleItem } from '../style'
 import '../style/style.css'
 
-const ChatTitle: FC = () => {
+interface props {
+	onNew: () => void
+}
+const ChatTitle: FC<props> = ({ onNew }) => {
 	const context = useContext(Context)
 	
 	return (
@@ -20,8 +23,8 @@ const ChatTitle: FC = () => {
 				<span className="ml-2 tracking-widest">聊天助手</span>
 			</div>
 			<div style={{ flex: 1, overflow: "hidden" }} className="px-3 flex flex-col">
-				<div >
-					<div className={titleItem}>
+				<div>
+					<div className={titleItem} onClick={onNew}>
 						<span className="scale-75"><Add /></span>
 						<div className="ml-1 break-normal truncate">新建聊天</div>
 					</div>

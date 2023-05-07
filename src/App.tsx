@@ -66,6 +66,10 @@ const App: FC = () => {
     setShowTopic(showTopic => !showTopic)
   }
 
+  const onNewChat = () => {
+    setMessages([])
+  }
+
   // const setStroage = (data: IMessage): IMessage[] => {
   //   const sMess = JSON.parse(localStorage.getItem('message') || "[]")
   //   const message = [...sMess, data]
@@ -76,9 +80,7 @@ const App: FC = () => {
 
 
   const receiveData = (value: string) => {
-
-
-
+    console.log('++++=', value)
     setMessages(msg => {
       const length = msg.length
 
@@ -142,7 +144,7 @@ const App: FC = () => {
         {/* 主体 */}
         <div className={outContainer}>
           <div style={{ width: "270px" }} className="hidden sm:block">
-            <ChatTitle />
+            <ChatTitle onNew={onNewChat} />
           </div>
           <div style={{ maxWidth: "100vw", flex: 1 }}>
             {/* top：46px */}
@@ -170,7 +172,7 @@ const App: FC = () => {
 
         {/* 移动端可见 */}
         <div style={{ width: "300px" }}>
-          <ChatTitle />
+          <ChatTitle onNew={onNewChat} />
         </div>
       </div>
     </Context.Provider>
