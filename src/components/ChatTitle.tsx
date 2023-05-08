@@ -31,11 +31,11 @@ const ChatTitle: FC<props> = ({ onNew }) => {
 				</div>
 				<div style={{height: "auto",overflow: "scroll"}} className="pb-2">
 					{
-						[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(v => (
-							<div key={v} className={titleItem}>
+						context?.allChats.map(v => (
+							<div key={v.sessionId} className={`${titleItem} ${v.isActive ? 'bg-green-400' : ''}`}>
 								<Chat />
-								<div className="ml-1 mr-8 break-normal truncate">你可以干嘛你佛山店冯楠撒丁奇偶分念佛阿帆</div>
-								<div className="absolute inset-y-0 right-1 trash">
+								<div className="ml-1 mr-8 break-normal truncate">{v.title}</div>
+								<div style={v.isActive ? {display: "flex", alignItems: "center"} : {}} className="absolute inset-y-0 right-1 trash">
 									<Trash />
 								</div>
 							</div>

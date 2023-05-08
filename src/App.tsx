@@ -3,6 +3,7 @@ import { FC, createContext, useEffect, useRef, useState } from 'react'
 
 import useTheme from './hooks/useTheme'
 import getCurrentDate from './utils/getCurrentDate'
+import getUUID from './utils/getUUID'
 
 import ChatTitle from './components/ChatTitle'
 import Content, { IMessage } from './components/Content'
@@ -11,20 +12,25 @@ import SendInput from './components/SendInput'
 import TopBar from './components/TopBar'
 
 
-import {
-  outContainer
-} from "./style"
+import { outContainer } from "./style"
 import { createSource } from './utils/request'
 
 
+interface IChat {
+  sessionId: string
+  title: string
+  isActive: boolean
+  content: IMessage[]
+}
+
+
 export const Context = createContext<{
-  typer: boolean
   loading: boolean
   showTopic: boolean
   theme: 'light' | 'dark'
   innerHeight: string
+  allChats: IChat[]
   changeTheme: () => void
-  setTyper: (status: boolean) => void
   setLoading: (status: boolean) => void
 } | null>(null)
 
@@ -32,14 +38,15 @@ export const Context = createContext<{
 const App: FC = () => {
   const [innerHeight, setInnerHeight] = useState("900px")
   const [contentDivHeight, setContentDivHeight] = useState('500px')
-  const [typer, setTyper] = useState(false)
   const [loading, setLoading] = useState(false)
   const [theme, changeTheme] = useTheme()
-  // const [msg, setMsg] = useState<IMessage[]>(JSON.parse(localStorage.getItem('message') || "[]"))
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{ scrollBottm: () => void }>(null)
 
-  // 聊天信息
+  // 所有聊天记录
+  const [allChats, setAllChats] = useState<IChat[]>([])
+
+  // 当前聊天记录
   const [messages, setMessages] = useState<IMessage[]>([])
 
   // 移动端下是否显示聊天标题
@@ -51,74 +58,124 @@ const App: FC = () => {
   }, [])
 
   useEffect(() => {
-    // 获取浏览器总高度，在减去头部（42px）和底部（36px）的区域
     const innerHeight = window.innerHeight
-
     setInnerHeight(`${innerHeight}px`)
 
     if (contentRef.current) {
+      // 获取浏览器总高度，在减去头部（42px）和底部（36px）的区域 = 内容区域
       setContentDivHeight(`${innerHeight - 82}px`)
     }
   }, [])
 
 
-  const handleAdd = () => {
-    setShowTopic(showTopic => !showTopic)
+  // 判断是否有当前聊天
+  const chatIsCurrent = (): boolean => {
+    const current = allChats.find(v => v.isActive)
+    if (!current) return false
+
+    return true
   }
 
+  const addChat = (chat: IChat, isActive: boolean) => {
+    if (isActive) {
+      setAllChats(chats => {
+        return [chat, ...chats]
+      })
+    }
+    else {
+      setAllChats(chats => {
+        return chats.map(v => {
+          if (v.isActive) {
+            v.content = [...chat.content]
+          }
+          return v
+        })
+      })
+    }
+  }
+
+  // 新增聊天
   const onNewChat = () => {
     setMessages([])
+
+    setAllChats(chats => {
+      return chats.map(v => {
+        v.isActive = false
+        return v
+      })
+    })
   }
 
-  // const setStroage = (data: IMessage): IMessage[] => {
-  //   const sMess = JSON.parse(localStorage.getItem('message') || "[]")
-  //   const message = [...sMess, data]
-  //   localStorage.setItem('message', JSON.stringify(message))
-
-  //   return message
-  // }
-
-
+  // 接口返回数据，将数据展示
   const receiveData = (value: string) => {
-    console.log('++++=', value)
-    setMessages(msg => {
-      const length = msg.length
+    const message = value.replace(/!xsy!/g, '\n')
 
-      if (msg[length - 1].role !== 'assistant') {
-        return [...msg, {
+    setMessages(msg => {
+      const lastIndex = msg.length - 1
+
+      if (msg[lastIndex].role !== 'assistant') {
+
+        const newMsg: IMessage[] = [...msg, {
           key: nanoid(),
           role: 'assistant',
           date: getCurrentDate(),
           message: value
         }]
+
+        addChat({
+          sessionId: "",
+          title: "",
+          isActive: false,
+          content: newMsg
+        }, false)
+
+        return newMsg
       }
 
+      msg[lastIndex].message = message
 
-      // const newMessages = [...msg]
-      msg[length - 1].message = value
+      addChat({
+        sessionId: "",
+        title: "",
+        isActive: false,
+        content: msg
+      }, false)
 
-      return msg
+      return [...msg]
     })
   }
 
 
-  /// 用户输入回车
+  // 用户输入回车
   const onSubmit = async (value: string) => {
 
     setLoading(true)
 
-    setMessages(msg => [...msg, {
+    const newMsg: IMessage[] = [...messages, {
       key: nanoid(),
       role: 'user',
       date: getCurrentDate(),
       message: value
-    }])
+    }]
 
+    setMessages(newMsg)
+
+    const uid = getUUID()
+
+    addChat({
+      sessionId: uid,
+      title: value,
+      isActive: true,
+      content: newMsg
+    }, !chatIsCurrent())
+
+    const currentChat = allChats.find(v => v.isActive)
 
     try {
       await createSource({
         message: value,
-        callBack: receiveData
+        callBack: receiveData,
+        sessionId: currentChat?.sessionId || uid,
       })
     }
     catch (error) {
@@ -135,9 +192,8 @@ const App: FC = () => {
 
   return (
     <Context.Provider value={{
-      typer, loading, showTopic, theme,
-      innerHeight,
-      changeTheme, setTyper, setLoading
+      loading, showTopic, theme, innerHeight, allChats,
+      changeTheme, setLoading
     }}>
       <div style={{ height: innerHeight }} className={`outer fixed ${showTopic ? 'outer-translateX' : ''}`}>
 
@@ -148,7 +204,7 @@ const App: FC = () => {
           </div>
           <div style={{ maxWidth: "100vw", flex: 1 }}>
             {/* top：46px */}
-            <TopBar onAdd={handleAdd} />
+            <TopBar onAdd={() => setShowTopic(showTopic => !showTopic)} />
 
             {/* main */}
             <div

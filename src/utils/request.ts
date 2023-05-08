@@ -34,18 +34,23 @@ export const createSource = ({
 			withCredentials: true
 		});
 
-		Event.onmessage = (message) => {
-			console.log(message)
-			callBack(message.data)
+		try {
+			Event.onmessage = (message) => {
+				console.log(message)
+				callBack(message.data)
+			}
+	
+			Event.onopen = () => {
+				console.log('连接已建立！')
+			}
+	
+			Event.onerror = (e) => {
+				Event.close()
+				resolve()
+			}
 		}
-
-		Event.onopen = () => {
-			console.log('连接已建立！')
-		}
-
-		Event.onerror = (e) => {
-			Event.close()
-			resolve()
+		catch {
+			resject()
 		}
 	})
 }
