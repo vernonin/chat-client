@@ -32,7 +32,7 @@ const ChatTitle: FC<props> = ({ onNew }) => {
 				<div style={{height: "auto",overflow: "scroll"}} className="pb-2">
 					{
 						context?.allChats.map(v => (
-							<div key={v.sessionId} className={`${titleItem} ${v.isActive ? 'bg-green-400' : ''}`}>
+							<div key={v.sessionId} className={`${titleItem} ${v.isActive ? 'bg-blue-400 dark:bg-blue-700' : ''}`}>
 								<Chat />
 								<div className="ml-1 mr-8 break-normal truncate">{v.title}</div>
 								<div style={v.isActive ? {display: "flex", alignItems: "center"} : {}} className="absolute inset-y-0 right-1 trash">

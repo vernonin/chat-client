@@ -78,7 +78,7 @@
 	display: none;
 }
 
-.typing p:last-of-type::after {
+.typing>p:last-child::after {
 	content: "";
 	display: inline-block;
   width: 0.6rem;

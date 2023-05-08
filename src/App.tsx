@@ -97,7 +97,7 @@ const App: FC = () => {
   // 新增聊天
   const onNewChat = () => {
     setMessages([])
-
+    
     setAllChats(chats => {
       return chats.map(v => {
         v.isActive = false
