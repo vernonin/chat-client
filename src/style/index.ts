@@ -29,7 +29,7 @@ export const titleItem = `
  * 底部局域
  */
 export const footer = `
-	bg-gray-100 text-center text-black text-sm
+	bg-gray-100 text-center text-gray-500 text-sm
 	dark:bg-gray-800 dark:text-white
 `
 

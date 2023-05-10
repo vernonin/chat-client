@@ -6,6 +6,9 @@ import Chat from '../icon/Chat'
 import Trash from '../icon/Trash'
 
 
+import Cooperate from '../icon/Cooperate'
+import Email from '../icon/Email'
+import Team from '../icon/Team'
 import { chatLogo, chatTitle, titleItem } from '../style'
 import '../style/style.css'
 
@@ -48,28 +51,35 @@ const ChatTitle: FC<props> = ({ onNew }) => {
 				className="px-2 py-4 text-sm dark:text-white flex flex-col justify-between"
 			>
 				<div>
-					<div className="text-center text-base font-bold mb-2">主要成员</div>
-					<div className="flex justify-around ">
+					<div className="flex items-center text-base font-bold mb-2 text-gray-700 dark:text-gray-300">
+						<span className="mr-1">主要成员</span>
+						<Team />
+					</div>
+					<div className="flex">
 						<div className="flex flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
 							<div className="avatar border border-2 border-gray-600 dark:border-white border-double">
 								<img src="/huanglin.jpg" alt="谢胜瑜" />
 							</div>
-							黄  琳
 						</div>
-						<div className="flex flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
+						<div className="flex -ml-4 flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
 							<div className="avatar border border-2 border-gray-600 dark:border-white border-double">
 								<img src="/xieshengyu.jpg" alt="谢胜瑜" />
 							</div>
-							谢胜瑜
 						</div>
 					</div>
 				</div>
 				<div>
-					<div className="leading-8 border-b border-gray-400">
-						邮箱1：huanglin824@gmail.com
+					<div className="flex items-center text-base font-bold text-gray-700 dark:text-gray-300">
+						<span className="mr-1">推广合作</span>
+						<Cooperate />
 					</div>
-					<div className="leading-8 border-b border-gray-400">
-						邮箱2：xieshengyu040@gmail.com
+					<div className="flex items-center leading-8 border-b border-gray-400">
+						<Email />
+						<span className="text-gray-700 dark:text-gray-300 ml-1">huanglin824@gmail.com</span>
+					</div>
+					<div className="flex items-center leading-8 border-b border-gray-400">
+						<Email />
+						<span className="text-gray-700 dark:text-gray-300 ml-1">xieshengyu040@gmail.com</span>
 					</div>
 				</div>
 			</div>
