@@ -89,6 +89,20 @@
 	animation: cursor-blink 0.4s infinite;
 }
 
+.msg-item p a {
+	color: #3498db !important;
+}
+
+.msg-item p a:hover {
+	color: #f40 !important;
+}
+
+.msg-item p + p,
+.msg-item p + pre,
+.msg-item pre + p {
+	margin-top: 0.6rem;
+}
+
 @keyframes cursor-blink {
   0% {
     opacity: 0;

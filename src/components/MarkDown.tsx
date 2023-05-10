@@ -3,7 +3,9 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula, duotoneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+
 
 // 打字效果
 import { Context } from '../App';
@@ -61,6 +63,7 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 			children={content}
 			skipHtml={true}
 			remarkPlugins={[remarkGfm]}
+			rehypePlugins={[rehypeRaw]}
 			components={{
 				code({ node, inline, className, children, ...props }) {
 					const match = /language-(\w+)/.exec(className || '')

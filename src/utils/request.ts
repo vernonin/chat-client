@@ -36,7 +36,6 @@ export const createSource = ({
 
 		try {
 			Event.onmessage = (message) => {
-				console.log(message)
 				callBack(message.data)
 			}
 	
@@ -45,6 +44,7 @@ export const createSource = ({
 			}
 	
 			Event.onerror = (e) => {
+				console.log('++', e)
 				Event.close()
 				resolve()
 			}
