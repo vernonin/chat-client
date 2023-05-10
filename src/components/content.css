@@ -1,13 +1,6 @@
-.content-h {
-	height: 75vh;
-	/* scroll-behavior: smooth; */
-}
-.chat-item {
-	max-width: 100%;
-	overflow-y: scroll;
-}
+/* 
 
 .content-h::-webkit-scrollbar,
 .chat-item::-webkit-scrollbar {
 	display: none;
-}
+} */

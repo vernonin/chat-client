@@ -18,7 +18,7 @@ const Profile = ({
           className="object-cover object-center w-12 rounded dark:bg-gray-500"
 				/>
 				<div className="pl-2 flex flex-col justify-around">
-					<h2 className="text-lg font-semibold">{name}</h2>
+					<h2 className="text-lg text-gray-600 dark:text-gray-200 font-semibold">{name}</h2>
 					<span className="text-xs dark:text-gray-400">{forte}</span>
 				</div>
 			</div>

@@ -17,7 +17,6 @@ const style = {
 	width: '36px',
 	height: '36px'
 }
-
 const LeftChat: FC<LeftChatProps> = ({
 	role,
 	date,
@@ -44,7 +43,7 @@ const LeftChat: FC<LeftChatProps> = ({
 		<div
 			style={{ fontSize: '0.94rem' }}
 			ref={isLastEle ? lastEleRef : null}
-			className={`flex overflow-x-scroll mt-2 chat-item dark:text-gray-100 ${role === 'user' ? 'flex-row-reverse' : ''}`}
+			className={`flex overflow-x-scroll scroll-none mt-2 chat-item dark:text-gray-100 ${role === 'user' ? 'flex-row-reverse' : ''}`}
 		>
 			<img style={style} className="rounded-lg transform translate-y-2" src={role === 'user' ? '/user.png' : '/gpt.png'} />
 			<div className={role === 'user' ? 'me-2 text-right' : 'ms-2'}>

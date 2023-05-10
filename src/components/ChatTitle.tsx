@@ -61,7 +61,7 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 						<div className="ml-1 break-normal truncate">新建聊天</div>
 					</div>
 				</div>
-				<div style={{height: "auto",overflow: "scroll"}} className="pb-2">
+				<div style={{height: "auto",overflow: "scroll"}} className="pb-2 scroll-none">
 					{
 						chatList?.map(v => (
 							<div

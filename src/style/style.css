@@ -6,6 +6,10 @@
 	box-sizing: border-box;
 }
 
+.scroll-none::-webkit-scrollbar {
+	display: none !important;
+}
+
 .switch-theme {
 	cursor: pointer;
 	height: 100%;
@@ -57,6 +61,53 @@
 	right: 0.8rem;
 }
 
+.content-h {
+	height: 75vh;
+}
+
+.scroll-show::-webkit-scrollbar {
+	width: 6px !important;
+	height: 8px !important;
+	animation: fadeout .6s infinite;
+}
+.scroll-show::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: #cccccc !important;
+	animation: fadeout .6s infinite;
+
+}
+.scroll-show::-webkit-scrollbar-track {
+	border-radius: 4px;
+	border: 1px solid rgba(136, 136, 136, 0.09);
+	background-color: transparent;
+	animation: fadeout .6s infinite;
+}
+
+.scroll-hide::-webkit-scrollbar {
+	width: 6px !important;
+	height: 8px !important;
+	opacity: 0;
+	animation: fadein 0.6 infinite;
+}
+.scroll-hide::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: transparent;
+	animation: fadein 0.6 infinite;
+}
+.scroll-hide::-webkit-scrollbar-track {
+	border-radius: 4px;
+	border: 1px solid transparent;
+	background-color: transparent;
+	animation: fadein 0.6 infinite;
+}
+
+.chat-item {
+	max-width: 100%;
+	overflow-y: scroll;
+}
+
+
+
 .avatar {
 	width: 46px;
 	height: 46px;
@@ -74,9 +125,6 @@
 	transform: scale(1.4);
 }
 
-::-webkit-scrollbar {
-	display: none;
-}
 
 .typing>p:last-child::after {
 	content: "";
@@ -113,6 +161,24 @@
   100% {
     opacity: 0;
   }
+}
+
+@keyframes fadeout {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadein {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }
 
 

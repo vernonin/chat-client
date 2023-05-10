@@ -1,8 +1,15 @@
-import { forwardRef, ForwardRefRenderFunction, useImperativeHandle, useRef } from 'react'
+import {
+	forwardRef,
+	ForwardRefRenderFunction,
+	useImperativeHandle,
+	useRef,
+	useState
+} from 'react'
 
 import ChatItem from './ChatItem'
 
-import './content.css'
+// import './content.css'
+import '../style/style.css'
 import Readme from './Readme'
 
 export interface IMessage {
@@ -20,14 +27,30 @@ interface ContentProps {
 
 type cRef = null
 
-const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, smooth, cRef }, ref) => {
+let timer: NodeJS.Timeout | null = null
 
+
+const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, smooth, cRef }, ref) => {
+	const [showScroll, setShowScroll] = useState(false)
 	const divRef = useRef<HTMLDivElement>(null)
 
 	const scrollBottm = () => {
 		if (divRef.current) {
 			divRef.current.scrollTop = divRef.current.scrollHeight
 		}
+	}
+
+	const onScroll = () => {
+		setShowScroll(true)
+
+		if (timer) {
+			clearTimeout(timer as NodeJS.Timeout)
+		}
+
+		timer = setTimeout(() => {
+			setShowScroll(false)
+
+		}, 1500)
 	}
 
 	useImperativeHandle(cRef, () => ({
@@ -37,7 +60,12 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, smooth,
 	}))
 
 	return (
-		<div ref={divRef} style={smooth ? {scrollBehavior: "smooth"} : {}} className="flex-1 relative content-h overflow-auto pb-2">
+		<div
+			ref={divRef}
+			style={smooth ? {scrollBehavior: "smooth"} : {}}
+			className={`flex-1 relative content-h overflow-auto pb-2 ${showScroll ? 'scroll-show' : 'scroll-hide'}`}
+			onScroll={onScroll}
+		>
 			{
 				dialog.length > 0 && dialog.map((d, i) => (
 					<ChatItem
