@@ -112,14 +112,15 @@ const App: FC = () => {
   const addChat = async (chat: IChat) => {
     await db.friends.add(chat)
   }
-  
+
   /**
    * content对话内容
    */
   const updateChat = async (content: IMessage[]) => {
-    const current = chatList?.find(v => v.isActive)
-
-    await db.friends.update(current?.id as number, {...current, content})
+    const current = (await db.friends.toArray()).find(v => v.isActive)
+    if (current) {
+      await db.friends.update(current?.id as number, {...current, content})
+    }
   }
 
   /**
@@ -146,7 +147,7 @@ const App: FC = () => {
       }
 
       msg[lastIndex].message = message
-      updateChat(msg)
+      updateChat([...msg])
       return [...msg]
     })
 

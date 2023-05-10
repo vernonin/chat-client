@@ -6,13 +6,12 @@ import { db } from '../utils/db';
 
 import Add from '../icon/Add';
 import Chat from '../icon/Chat';
-import Cooperate from '../icon/Cooperate';
-import Email from '../icon/Email';
 import Team from '../icon/Team';
 import Trash from '../icon/Trash';
 
 import { chatLogo, chatTitle, titleItem } from '../style';
 import '../style/style.css';
+import Profile from "./Profile";
 
 interface props {
 	onNew: () => void
@@ -91,15 +90,24 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 				</div>
 			</div>
 			<div
-				style={{ height: "220px" }}
-				className="px-2 py-4 text-sm dark:text-white flex flex-col justify-between"
+				style={{ height: "300px" }}
+				className="px-2 py-2 text-sm dark:text-white flex flex-col justify-between"
 			>
 				<div>
-					<div className="flex items-center text-base font-bold mb-2 text-gray-700 dark:text-gray-300">
+					<div className="flex justify-center items-center text-base font-bold mb-2 text-gray-700 dark:text-gray-300">
 						<span className="mr-1">主要成员</span>
 						<Team />
 					</div>
-					<div className="flex">
+					{
+						[
+							{name: "谢胜瑜", avatar: "/xieshengyu.jpg", forte: "后端开发", number: "133 1848 0733", email: "huanglin824@gmail"},
+							{name: "黄琳", avatar: "/huanglin.jpg", forte: "前端开发", number: "133 1848 0733", email: "huanglin824@gmail"},
+						].map(v => (
+							<Profile key={v.avatar} {...v} />
+						))
+					}
+
+					{/* <div className="flex">
 						<div className="flex flex-col items-center cursor-pointer text-center text-gray-700 dark:text-gray-300 underline font-semibold">
 							<div className="avatar border border-2 border-gray-600 dark:border-white border-double">
 								<img src="/huanglin.jpg" alt="谢胜瑜" />
@@ -110,9 +118,9 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 								<img src="/xieshengyu.jpg" alt="谢胜瑜" />
 							</div>
 						</div>
-					</div>
+					</div> */}
 				</div>
-				<div>
+				{/* <div>
 					<div className="flex items-center text-base font-bold text-gray-700 dark:text-gray-300">
 						<span className="mr-1">推广合作</span>
 						<Cooperate />
@@ -125,7 +133,7 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 						<Email />
 						<span className="text-gray-700 dark:text-gray-300 ml-1">xieshengyu040@gmail.com</span>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	)
