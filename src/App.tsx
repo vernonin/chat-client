@@ -46,6 +46,8 @@ const App: FC = () => {
   // 当前聊天记录
   const [messages, setMessages] = useState<IMessage[]>([])
 
+  // 滚动是否有滑动效果
+  const [scrollSmooth, setScrollSmooth] = useState(false)
   // 移动端下是否显示聊天标题
   const [showTopic, setShowTopic] = useState(false)
 
@@ -88,6 +90,8 @@ const App: FC = () => {
    * @id 聊天项ID
    */
   const changeActive = async (id: number) => {
+    setScrollSmooth(false)
+
     chatList?.forEach(async (v) => {
       if (v.id === id) {
         setMessages(v.content)
@@ -160,8 +164,8 @@ const App: FC = () => {
    * @value 输入值
    */
   const onSubmit = async (value: string) => {
-
     setLoading(true)
+    setScrollSmooth(true)
     
     const uid = getUUID()
     const length = messages.length
@@ -225,7 +229,7 @@ const App: FC = () => {
                 ref={contentRef}
                 className="flex flex-col pb-4 relative h-full"
               >
-                <Content cRef={cRef} dialog={messages} />
+                <Content cRef={cRef} smooth={scrollSmooth} dialog={messages} />
                 <SendInput loading={loading} onSubmit={onSubmit} />
               </div>
             </div>

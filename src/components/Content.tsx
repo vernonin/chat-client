@@ -14,12 +14,13 @@ export interface IMessage {
 
 interface ContentProps {
 	cRef: any
+	smooth: boolean
 	dialog: IMessage[]
 }
 
 type cRef = null
 
-const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef }, ref) => {
+const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, smooth, cRef }, ref) => {
 
 	const divRef = useRef<HTMLDivElement>(null)
 
@@ -36,7 +37,7 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, cRef },
 	}))
 
 	return (
-		<div ref={divRef} className="flex-1 relative content-h overflow-auto pb-2">
+		<div ref={divRef} style={smooth ? {scrollBehavior: "smooth"} : {}} className="flex-1 relative content-h overflow-auto pb-2">
 			{
 				dialog.length > 0 && dialog.map((d, i) => (
 					<ChatItem

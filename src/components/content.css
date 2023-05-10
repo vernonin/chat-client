@@ -1,6 +1,6 @@
 .content-h {
 	height: 75vh;
-	scroll-behavior: smooth;
+	/* scroll-behavior: smooth; */
 }
 .chat-item {
 	max-width: 100%;
