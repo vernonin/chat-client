@@ -1,19 +1,20 @@
-import { nanoid } from 'nanoid'
-import { FC, createContext, useEffect, useRef, useState } from 'react'
+import { useLiveQuery } from "dexie-react-hooks";
+import { nanoid } from 'nanoid';
+import { FC, createContext, useEffect, useRef, useState } from 'react';
 
-import useTheme from './hooks/useTheme'
-import getCurrentDate from './utils/getCurrentDate'
-import getUUID from './utils/getUUID'
+import useTheme from './hooks/useTheme';
+import { db } from './utils/db';
+import getCurrentDate from './utils/getCurrentDate';
+import getUUID from './utils/getUUID';
+import { createSource } from './utils/request';
 
-import ChatTitle from './components/ChatTitle'
-import Content, { IMessage } from './components/Content'
-import Footer from './components/Footer'
-import SendInput from './components/SendInput'
-import TopBar from './components/TopBar'
+import ChatTitle from './components/ChatTitle';
+import Content, { IMessage } from './components/Content';
+import Footer from './components/Footer';
+import SendInput from './components/SendInput';
+import TopBar from './components/TopBar';
 
-
-import { outContainer } from "./style"
-import { createSource } from './utils/request'
+import { outContainer } from "./style";
 
 
 interface IChat {
@@ -29,7 +30,6 @@ export const Context = createContext<{
   showTopic: boolean
   theme: 'light' | 'dark'
   innerHeight: string
-  allChats: IChat[]
   changeTheme: () => void
   setLoading: (status: boolean) => void
 } | null>(null)
@@ -43,9 +43,6 @@ const App: FC = () => {
   const contentRef = useRef<HTMLDivElement>(null)
   const cRef = useRef<{ scrollBottm: () => void }>(null)
 
-  // 所有聊天记录
-  const [allChats, setAllChats] = useState<IChat[]>([])
-
   // 当前聊天记录
   const [messages, setMessages] = useState<IMessage[]>([])
 
@@ -53,7 +50,13 @@ const App: FC = () => {
   const [showTopic, setShowTopic] = useState(false)
 
 
+  const chatList = useLiveQuery(
+		async () => await db.friends.toArray()
+	)
+
+
   useEffect(() => {
+    initMessage()
     cRef.current?.scrollBottm()
   }, [])
 
@@ -67,46 +70,62 @@ const App: FC = () => {
     }
   }, [])
 
+  /**
+   * 初始化聊天记录
+   */
+  const initMessage = async () => {
+    const chatList =  await db.friends.toArray()
 
-  // 判断是否有当前聊天
-  const chatIsCurrent = (): boolean => {
-    const current = allChats.find(v => v.isActive)
-    if (!current) return false
+    const current = chatList.find(v => v.isActive)
 
-    return true
-  }
-
-  const addChat = (chat: IChat, isActive: boolean) => {
-    if (isActive) {
-      setAllChats(chats => {
-        return [chat, ...chats]
-      })
-    }
-    else {
-      setAllChats(chats => {
-        return chats.map(v => {
-          if (v.isActive) {
-            v.content = [...chat.content]
-          }
-          return v
-        })
-      })
+    if (current) {
+      setMessages(current.content)
     }
   }
 
-  // 新增聊天
-  const onNewChat = () => {
-    setMessages([])
-    
-    setAllChats(chats => {
-      return chats.map(v => {
-        v.isActive = false
-        return v
-      })
+  /**
+   * 切换聊天项
+   * @id 聊天项ID
+   */
+  const changeActive = async (id: number) => {
+    chatList?.forEach(async (v) => {
+      if (v.id === id) {
+        setMessages(v.content)
+        return await db.friends.update(id, {...v, isActive: true})
+      }
+
+      await db.friends.update(v.id as number, {...v, isActive: false})
     })
   }
 
-  // 接口返回数据，将数据展示
+  
+  const getCurrSessionId = (): string | undefined => {
+    const current = chatList?.find(v => v.isActive)
+
+    return current?.sessionId
+  }
+
+  /**
+   * @IChat 聊天项
+   * @isNew 是否是新聊天
+   */
+  const addChat = async (chat: IChat) => {
+    await db.friends.add(chat)
+  }
+  
+  /**
+   * content对话内容
+   */
+  const updateChat = async (content: IMessage[]) => {
+    const current = chatList?.find(v => v.isActive)
+
+    await db.friends.update(current?.id as number, {...current, content})
+  }
+
+  /**
+   * 接口返回数据，将数据展示
+   * @value 服务器返回值
+   */
   const receiveData = (value: string) => {
     const message = value.replace(/!xsy!/g, '\n')
 
@@ -122,35 +141,29 @@ const App: FC = () => {
           message: value
         }]
 
-        addChat({
-          sessionId: "",
-          title: "",
-          isActive: false,
-          content: newMsg
-        }, false)
-
+        updateChat(newMsg)
         return newMsg
       }
 
       msg[lastIndex].message = message
-
-      addChat({
-        sessionId: "",
-        title: "",
-        isActive: false,
-        content: msg
-      }, false)
-
+      updateChat(msg)
       return [...msg]
     })
+
+    cRef.current?.scrollBottm()
   }
 
 
-  // 用户输入回车
+  /**
+   * 用户按下回车键，发送消息
+   * @value 输入值
+   */
   const onSubmit = async (value: string) => {
 
     setLoading(true)
-
+    
+    const uid = getUUID()
+    const length = messages.length
     const newMsg: IMessage[] = [...messages, {
       key: nanoid(),
       role: 'user',
@@ -160,22 +173,17 @@ const App: FC = () => {
 
     setMessages(newMsg)
 
-    const uid = getUUID()
-
-    addChat({
-      sessionId: uid,
-      title: value,
-      isActive: true,
-      content: newMsg
-    }, !chatIsCurrent())
-
-    const currentChat = allChats.find(v => v.isActive)
+    if (length < 1) {
+      addChat({ sessionId: uid, title: value, isActive: true, content: newMsg })
+    } else {
+      updateChat(newMsg)
+    }
 
     try {
       await createSource({
         message: value,
         callBack: receiveData,
-        sessionId: currentChat?.sessionId || uid,
+        sessionId: getCurrSessionId() || uid,
       })
     }
     catch (error) {
@@ -192,7 +200,7 @@ const App: FC = () => {
 
   return (
     <Context.Provider value={{
-      loading, showTopic, theme, innerHeight, allChats,
+      loading, showTopic, theme, innerHeight,
       changeTheme, setLoading
     }}>
       <div style={{ height: innerHeight }} className={`outer fixed ${showTopic ? 'outer-translateX' : ''}`}>
@@ -200,7 +208,7 @@ const App: FC = () => {
         {/* 主体 */}
         <div className={outContainer}>
           <div style={{ width: "270px" }} className="hidden sm:block">
-            <ChatTitle onNew={onNewChat} />
+            <ChatTitle onNew={() => setMessages([])} onChangeActive={changeActive} />
           </div>
           <div style={{ maxWidth: "100vw", flex: 1 }}>
             {/* top：46px */}
@@ -228,7 +236,7 @@ const App: FC = () => {
 
         {/* 移动端可见 */}
         <div style={{ width: "300px" }}>
-          <ChatTitle onNew={onNewChat} />
+          <ChatTitle onNew={() => setMessages([])} onChangeActive={changeActive} />
         </div>
       </div>
     </Context.Provider>
