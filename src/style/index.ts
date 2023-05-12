@@ -1,4 +1,9 @@
 
+/**
+ * 最外层
+ */
+export const outerLayer = `w-screen h-screen overflow-hidden`
+
 export const outContainer = `flex over overflow-hidden w-screen`
 
 export const topBar = `
@@ -9,7 +14,7 @@ export const topBar = `
 /**
  * 标题区域
  */
-export const chatTitle = ` flex flex-col
+export const chatTitle = `flex flex-col overflow-hidden
 	bg-blue-100 divide-y divide-black divide-opacity-50
 	dark:bg-gray-900 dark:divide-white
 `
@@ -29,6 +34,7 @@ export const titleItem = `
  * 底部局域
  */
 export const footer = `
+	absolute left-0 right-0 bottom-0 
 	bg-gray-100 text-center text-gray-500 text-sm
 	dark:bg-gray-800 dark:text-white
 `

@@ -24,7 +24,7 @@ const Profile = ({
 			</div>
 			<div>
 				<div className="mt-2">
-					<span className="flex items-center space-x-2">
+					<span className="flex items-center space-x-2 h-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -38,7 +38,7 @@ const Profile = ({
             </svg>
             <span className="dark:text-gray-400">{number}</span>
           </span>
-          <span className="flex items-center space-x-2">
+          <span className="flex items-center space-x-2 h-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"

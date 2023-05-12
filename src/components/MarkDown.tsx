@@ -1,15 +1,15 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dracula, duotoneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula, duotoneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 
 // 打字效果
-import { Context } from '../App';
-import Copy from '../icon/Copy';
+import Copy from "../icon/Copy";
+import { Context } from "../page/ChatMain";
 
 
 
@@ -37,8 +37,8 @@ const CodeBlock = ({ children, match }: {
 			</CopyToClipboard>
 			<SyntaxHighlighter
 				// eslint-disable-next-line react/no-children-prop
-				children={String(children).replace(/\n$/, '')}
-				style={context?.theme === 'dark' ? dracula : duotoneLight}
+				children={String(children).replace(/\n$/, "")}
+				style={context?.theme === "dark" ? dracula : duotoneLight}
 				language={match[1]}
 				PreTag="div"
 				showLineNumbers={true}
@@ -66,7 +66,7 @@ const MarkDown: FC<MarkDownProps> = ({ content }) => {
 			rehypePlugins={[rehypeRaw]}
 			components={{
 				code({ node, inline, className, children, ...props }) {
-					const match = /language-(\w+)/.exec(className || '')
+					const match = /language-(\w+)/.exec(className || "")
 
 					return !inline && match
 						?

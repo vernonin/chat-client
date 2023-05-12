@@ -1,11 +1,11 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { FC, useEffect, useRef, useState } from "react"
+import { ToastContainer, toast } from "react-toastify"
 
-import ArrowPath from '../icon/ArrowPath'
-import Send from '../icon/Send'
+import ArrowPath from "../icon/ArrowPath"
+import Send from "../icon/Send"
 
-import 'react-toastify/dist/ReactToastify.css'
-import { input } from '../style'
+import "react-toastify/dist/ReactToastify.css"
+import { input } from "../style"
 
 interface SendInputProps {
   loading: boolean

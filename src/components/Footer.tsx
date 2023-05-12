@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC } from "react"
 
-import { footer } from '../style'
+import { footer } from "../style"
 
 const Footer: FC = () => {
 	return (

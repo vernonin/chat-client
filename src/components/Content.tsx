@@ -4,17 +4,16 @@ import {
 	useImperativeHandle,
 	useRef,
 	useState
-} from 'react'
+} from "react"
 
-import ChatItem from './ChatItem'
+import ChatItem from "./ChatItem"
 
-// import './content.css'
-import '../style/style.css'
-import Readme from './Readme'
+import "../style/style.css"
+import Readme from "./Readme"
 
 export interface IMessage {
 	key: string
-	role: 'assistant' | 'user' | 'error'
+	role: "assistant" | "user" | "error"
 	date: string
 	message: string
 }
@@ -63,7 +62,7 @@ const Content: ForwardRefRenderFunction<cRef, ContentProps> = ({ dialog, smooth,
 		<div
 			ref={divRef}
 			style={smooth ? {scrollBehavior: "smooth"} : {}}
-			className={`flex-1 relative content-h overflow-auto pb-2 ${showScroll ? 'scroll-show' : 'scroll-hide'}`}
+			className={`flex-1 relative content-h overflow-auto pb-2 ${showScroll ? "scroll-show" : "scroll-hide"}`}
 			onScroll={onScroll}
 		>
 			{

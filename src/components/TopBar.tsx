@@ -1,12 +1,12 @@
-import { FC, useContext } from 'react'
-import Add from '../icon/Add'
-import Moon from '../icon/Moon'
-import Sun from '../icon/Sun'
+import { FC, useContext } from "react"
+import Add from "../icon/Add"
+import Moon from "../icon/Moon"
+import Sun from "../icon/Sun"
 
-import { Context } from '../App'
-import { topBar } from '../style'
+import { Context } from "../page/ChatMain"
+import { topBar } from "../style"
 
-import '../style/style.css'
+import "../style/style.css"
 
 
 interface TopBarProps {
@@ -30,12 +30,12 @@ const TopBar: FC<TopBarProps> = ({ onAdd }) => {
 			<div className="flex">
 				<div className="switch-theme" onClick={context?.changeTheme}>
 					{
-						context?.theme === 'light'
+						context?.theme === "light"
 							? <Moon />
 							: <Sun />
 					}
 				</div>
-				<span className={`transition-all mr-2 duration-300 sm:hidden ${context?.showTopic ? 'rotate-45' : ''}`} onClick={onAdd}>
+				<span className={`transition-all mr-2 duration-300 sm:hidden ${context?.showTopic ? "rotate-45" : ""}`} onClick={onAdd}>
 					<Add />
 				</span>
 			</div>
