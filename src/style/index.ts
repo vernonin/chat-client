@@ -24,7 +24,7 @@ export const chatLogo = `
 `
 export const titleItem = `
   hover:bg-blue-300 dark:hover:bg-blue-900
-	flex relative items-center mt-2 px-2 text-sm antialiased font-semibold
+	flex relative items-center mt-2 px-1 text-sm antialiased font-semibold
 	cursor-pointer border border-gray-400 rounded-lg h-10 text-gray-800 chat-title-item
 	dark:text-white
 `

@@ -17,6 +17,8 @@ import Notification from "../components/Notification"
 import SendInput from "../components/SendInput"
 import TopBar from "../components/TopBar"
 
+import { ToastContainer } from "react-toastify"
+import EditBox from "../components/EditBox"
 import { outerLayer } from "../style"
 import "../style/style.css"
 
@@ -58,6 +60,9 @@ const ChatMain: FC = () => {
   // 删除弹框显示隐藏
   const [openConfirm, setOpenConfirm] = useState(false)
 
+  // 编辑弹框显示隐藏
+  const [openEditBox, setOpenEditBox] = useState(false)
+
   const [deleteState, setDeleteState] = useState<{id: number, isActive: boolean}>({
 		id: 0,
 		isActive: false
@@ -87,8 +92,21 @@ const ChatMain: FC = () => {
     setMessages([])
   }
 
+  const editChat = (id: number) => {
+    setOpenEditBox(true)
 
-  const deleteChat = async (id: number, isActive: boolean) => {
+    setDeleteState({id, isActive: false})
+  }
+
+  const editChatSubmit = async (title: string) => {
+    const current = chatList?.find(v => v.id === deleteState.id)
+
+    await db.friends.update(current?.id as number, {...current, title})
+
+    setOpenEditBox(false)
+  }
+
+  const deleteChat = (id: number, isActive: boolean) => {
 		setOpenConfirm(true)
 
 		setDeleteState({id, isActive})
@@ -241,7 +259,7 @@ const ChatMain: FC = () => {
           {/* 主要聊天，移动端下会往左移 */}
           <div className={`over-main flex`}>
             <aside className="hidden sm:block">
-              <ChatTitle onNew={newChat} onDelete={deleteChat} onChangeActive={changeActive} />
+              <ChatTitle onNew={newChat} onEdit={editChat} onDelete={deleteChat} onChangeActive={changeActive} />
             </aside>
             <section style={{maxWidth: "100vw", width: chatMainWidth + "px"}} className="relative bottom-0 left-0">
               <TopBar onAdd={() => setShowTopic(showTopic => !showTopic)} />
@@ -267,7 +285,7 @@ const ChatMain: FC = () => {
 
           {/* 移动端可见 */}
           <div className="block sm:hidden">
-            <ChatTitle onNew={newChat} onDelete={deleteChat} onChangeActive={changeActive} />
+            <ChatTitle onNew={newChat} onEdit={editChat} onDelete={deleteChat} onChangeActive={changeActive} />
           </div>
         </main>
 
@@ -275,6 +293,26 @@ const ChatMain: FC = () => {
           visible={openConfirm}
           onCancel={() => setOpenConfirm(false)}
           onConfirm={confirm}
+        />
+
+        <EditBox
+          visible={openEditBox}
+          onCancel={() => setOpenEditBox(false)}
+          onSubmit={editChatSubmit}
+        />
+
+        {/* Empty message toast */}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={theme}
         />
       </section>
     </Context.Provider>

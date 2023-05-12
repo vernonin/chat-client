@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react"
-import { ToastContainer, toast } from "react-toastify"
+import { toast } from "react-toastify"
 
 import ArrowPath from "../icon/ArrowPath"
 import Send from "../icon/Send"
@@ -45,20 +45,6 @@ const SendInput: FC<SendInputProps> = ({ loading, onSubmit }) => {
           loading ? <ArrowPath /> : <Send click={emitClick} />
         }
       </div>
-
-      {/* Empty message toast */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   )
 }

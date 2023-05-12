@@ -47,13 +47,20 @@
 	margin-right: 40px;
 }
 
-.chat-title-item:hover .trash{
-	display: flex;
-	align-items: center;
+.chat-title-item:hover .ct-bar{
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
 }
 
-.trash {
+.ct-bar {
 	display: none;
+}
+
+.ct-bar-show {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
 }
 
 .outer {

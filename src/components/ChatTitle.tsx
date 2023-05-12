@@ -11,15 +11,17 @@ import Chat from "../icon/Chat"
 import Team from "../icon/Team"
 import Trash from "../icon/Trash"
 
+import Edit from "../icon/Edit"
 import { chatLogo, chatTitle, titleItem } from "../style"
 import "../style/style.css"
 
 interface props {
 	onNew: () => void
+	onEdit: (id: number) => void
 	onDelete: (id: number, isActive: boolean) => void
 	onChangeActive: (id: number) => void
 }
-const ChatTitle: FC<props> = ({ onNew, onDelete, onChangeActive }) => {
+const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 	const size = useSize()
 
 	const chatList = useLiveQuery(
@@ -66,16 +68,10 @@ const ChatTitle: FC<props> = ({ onNew, onDelete, onChangeActive }) => {
 									}}
 								>
 									<Chat />
-									<div className="ml-1 mr-8 break-normal truncate">{v.title}</div>
-									<div
-										style={v.isActive ? {display: "flex", alignItems: "center"} : {}}
-										className="absolute inset-y-0 right-1 trash"
-										onClick={e => {
-											e.stopPropagation()
-											onDelete(v.id as number, v.isActive)
-										}}
-									>
-										<Trash />
+									<div className="ml-1 flex-1 break-normal truncate">{v.title}</div>
+									<div style={{height: "100%"}} className={`flex items-center justify-between space-x-1 ct-bar ${v.isActive ? 'ct-bar-show' : ''}`}>
+										<Edit onClick={() => onEdit(v.id as number)}/>
+										<Trash onClick={() => onDelete(v.id as number, v.isActive)} />
 									</div>
 								</div>
 							))
