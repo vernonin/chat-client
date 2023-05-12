@@ -82,6 +82,11 @@ const ChatMain: FC = () => {
     }
   }
 
+  const newChat = () => {
+    setShowTopic(false)
+    setMessages([])
+  }
+
 
   const deleteChat = async (id: number, isActive: boolean) => {
 		setOpenConfirm(true)
@@ -231,14 +236,14 @@ const ChatMain: FC = () => {
       changeTheme, setLoading
     }}>
       <section className={outerLayer}>
-        <main className={`over-layer ${showTopic ? "outer-translateX" : ""}`}>
+        <main style={{height: size.height + "px"}} className={`over-layer ${showTopic ? "outer-translateX" : ""}`}>
 
           {/* 主要聊天，移动端下会往左移 */}
           <div className={`over-main flex`}>
             <aside className="hidden sm:block">
-              <ChatTitle onDelete={deleteChat} onNew={() => setMessages([])} onChangeActive={changeActive} />
+              <ChatTitle onNew={newChat} onDelete={deleteChat} onChangeActive={changeActive} />
             </aside>
-            <section style={{maxWidth: "100vw", width: chatMainWidth + "px"}} className="relative">
+            <section style={{maxWidth: "100vw", width: chatMainWidth + "px"}} className="relative bottom-0 left-0">
               <TopBar onAdd={() => setShowTopic(showTopic => !showTopic)} />
 
               {/* 主聊天框 */}
@@ -262,7 +267,7 @@ const ChatMain: FC = () => {
 
           {/* 移动端可见 */}
           <div className="block sm:hidden">
-            <ChatTitle onDelete={deleteChat} onNew={() => setMessages([])} onChangeActive={changeActive} />
+            <ChatTitle onNew={newChat} onDelete={deleteChat} onChangeActive={changeActive} />
           </div>
         </main>
 

@@ -1,4 +1,4 @@
-const URL = "/chat";
+const URL = "/chat"
 const headers = {
 	"Content-Type": "application/json",
 };
@@ -40,11 +40,11 @@ export const createSource = ({
 			}
 	
 			Event.onopen = () => {
-				console.log('连接已建立！')
+				console.log("连接已建立！")
 			}
 	
 			Event.onerror = (e) => {
-				console.log('++', e)
+				console.log("++", e)
 				Event.close()
 				resolve()
 			}

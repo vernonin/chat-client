@@ -2,7 +2,7 @@
 /**
  * 最外层
  */
-export const outerLayer = `w-screen h-screen overflow-hidden`
+export const outerLayer = `w-screen overflow-hidden`
 
 export const outContainer = `flex over overflow-hidden w-screen`
 
@@ -23,6 +23,7 @@ export const chatLogo = `
 	dark:text-white
 `
 export const titleItem = `
+  hover:bg-blue-300 dark:hover:bg-blue-900
 	flex relative items-center mt-2 px-2 text-sm antialiased font-semibold
 	cursor-pointer border border-gray-400 rounded-lg h-10 text-gray-800 chat-title-item
 	dark:text-white

@@ -1,5 +1,5 @@
-import Dexie, { Table } from 'dexie'
-import { IMessage } from '../components/Content'
+import Dexie, { Table } from "dexie"
+import { IMessage } from "../components/Content"
 
 export interface IChat {
 	id?: number
@@ -13,9 +13,9 @@ export class MySubClassedDexie extends Dexie {
   friends!: Table<IChat>; 
 
   constructor() {
-    super('chat');
+    super("chat");
     this.version(1).stores({
-      friends: '++id, sessionId, title, isActive, content'
+      friends: "++id, sessionId, title, isActive, content"
     })
   }
 }

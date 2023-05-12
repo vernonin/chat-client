@@ -28,15 +28,14 @@ const ChatTitle: FC<props> = ({ onNew, onDelete, onChangeActive }) => {
 
 
 	const newChat = async () => {
+		const chatList =  await db.friends.toArray()
 		if (chatList && chatList?.length < 1) {
 			return
 		}
 
-		// 找到当前的项目项
-		const current = chatList?.find(v => v.isActive)
-
-		// 将当前聊天项设为不活跃
-		await db.friends.update(current?.id as number, {...current, isActive: false})
+		chatList?.forEach(async (v) => {
+      await db.friends.update(v.id as number, {...v, isActive: false})
+    })
 
 		onNew()
 	}
@@ -86,13 +85,13 @@ const ChatTitle: FC<props> = ({ onNew, onDelete, onChangeActive }) => {
 			</section>
 			<section style={{height: "300px"}} className="px-3">
 				<div className="flex justify-center items-center text-base py-2 font-bold text-gray-700 dark:text-gray-300">
-					<span className="mr-1">主要成员</span>
+					<span className="mr-1">Meet our team</span>
 					<Team />
 				</div>
 				{
 					[
-						{name: "谢胜瑜", avatar: "/xieshengyu.jpg", forte: "后端开发", number: "133 1848 0733", email: "huanglin824@gmail"},
-						{name: "黄\t琳", avatar: "/huanglin.jpg", forte: "前端开发", number: "133 1848 0733", email: "huanglin824@gmail"},
+						{name: "谢胜瑜", avatar: "/xieshengyu.jpg", forte: "后端开发", number: "133 1848 0733", email: "xueshengyu242@gmail.com"},
+						{name: "黄\t琳", avatar: "/huanglin.jpg", forte: "前端开发", number: "133 1848 0733", email: "huanglin824@gmail.com"},
 					].map(v => (
 						<Profile key={v.avatar} {...v} />
 					))

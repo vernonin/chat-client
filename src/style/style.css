@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--typing-color: #000;
+}
 
 * {
 	box-sizing: border-box;
@@ -85,26 +88,26 @@
 .scroll-show::-webkit-scrollbar {
 	width: 6px !important;
 	height: 8px !important;
-	animation: fadeout .6s infinite;
+	animation: fadeout 1.6s infinite;
 }
 .scroll-show::-webkit-scrollbar-thumb {
 	border-radius: 4px;
 	background-color: #cccccc !important;
-	animation: fadeout .6s infinite;
+	animation: fadeout 1.6s infinite;
 
 }
 .scroll-show::-webkit-scrollbar-track {
 	border-radius: 4px;
 	border: 1px solid rgba(136, 136, 136, 0.09);
 	background-color: transparent;
-	animation: fadeout .6s infinite;
+	animation: fadeout 1.6s infinite;
 }
 
 .scroll-hide::-webkit-scrollbar {
 	width: 6px !important;
 	height: 8px !important;
 	opacity: 0;
-	animation: fadein 0.6 infinite;
+	animation: fadein 1.6 infinite;
 }
 .scroll-hide::-webkit-scrollbar-thumb {
 	border-radius: 4px;
@@ -149,7 +152,7 @@
   width: 0.6rem;
 	height: 4px;
 	transform: translateY(0.2rem);
-	background-color: #a8a8a8;
+	background-color: var(--typing-color);
 	margin-left: 0.2rem;
 	animation: cursor-blink 0.4s infinite;
 }
@@ -197,20 +200,20 @@
 }
 
 @keyframes fadeout {
-	from {
+	0% {
 		opacity: 0;
 	}
-	to {
+	100% {
 		opacity: 1;
 	}
 }
 
 @keyframes fadein {
 	from {
-		opacity: 1;
+		opacity: 0;
 	}
 	to {
-		opacity: 0;
+		opacity: 1;
 	}
 }
 
