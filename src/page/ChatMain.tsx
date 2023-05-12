@@ -13,6 +13,7 @@ import { createSource } from "../utils/request"
 import ChatTitle from "../components/ChatTitle"
 import Content, { IMessage } from "../components/Content"
 import Footer from "../components/Footer"
+import Notification from "../components/Notification"
 import SendInput from "../components/SendInput"
 import TopBar from "../components/TopBar"
 
@@ -54,6 +55,14 @@ const ChatMain: FC = () => {
 	// 滚动是否有滑动效果
   const [scrollSmooth, setScrollSmooth] = useState(false)
 
+  // 删除弹框显示隐藏
+  const [openConfirm, setOpenConfirm] = useState(false)
+
+  const [deleteState, setDeleteState] = useState<{id: number, isActive: boolean}>({
+		id: 0,
+		isActive: false
+	})
+
 
 	useEffect(() => {
     initMessage()
@@ -73,6 +82,27 @@ const ChatMain: FC = () => {
     }
   }
 
+
+  const deleteChat = async (id: number, isActive: boolean) => {
+		setOpenConfirm(true)
+
+		setDeleteState({id, isActive})
+	}
+
+  /**
+   * 删除聊天项
+   */
+  const confirm = async () => {
+		const {id, isActive} = deleteState
+		await db.friends.delete(id)
+
+		if (isActive) {
+			setMessages([])
+      setShowTopic(false)
+		}
+		setOpenConfirm(false)
+	}
+
 	/**
    * 切换聊天项
    * @id 聊天项ID
@@ -88,6 +118,8 @@ const ChatMain: FC = () => {
 
       await db.friends.update(v.id as number, {...v, isActive: false})
     })
+
+    setShowTopic(false)
 	}
 
 
@@ -190,6 +222,8 @@ const ChatMain: FC = () => {
     setLoading(false)
 	}
 
+  const chatMainWidth = size.width < 640 ? size.width : size.width - 280
+
 
 	return (
     <Context.Provider value={{
@@ -202,9 +236,9 @@ const ChatMain: FC = () => {
           {/* 主要聊天，移动端下会往左移 */}
           <div className={`over-main flex`}>
             <aside className="hidden sm:block">
-              <ChatTitle onNew={() => setMessages([])} onChangeActive={changeActive} />
+              <ChatTitle onDelete={deleteChat} onNew={() => setMessages([])} onChangeActive={changeActive} />
             </aside>
-            <section style={{maxWidth: "100vw"}} className="flex-1 relative">
+            <section style={{maxWidth: "100vw", width: chatMainWidth + "px"}} className="relative">
               <TopBar onAdd={() => setShowTopic(showTopic => !showTopic)} />
 
               {/* 主聊天框 */}
@@ -227,8 +261,16 @@ const ChatMain: FC = () => {
           </div>
 
           {/* 移动端可见 */}
-          <ChatTitle onNew={() => setMessages([])} onChangeActive={changeActive} />
+          <div className="block sm:hidden">
+            <ChatTitle onDelete={deleteChat} onNew={() => setMessages([])} onChangeActive={changeActive} />
+          </div>
         </main>
+
+        <Notification
+          visible={openConfirm}
+          onCancel={() => setOpenConfirm(false)}
+          onConfirm={confirm}
+        />
       </section>
     </Context.Provider>
 	)

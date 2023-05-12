@@ -1,11 +1,9 @@
 import { useLiveQuery } from "dexie-react-hooks"
-import { FC, useState } from "react"
+import { FC } from "react"
 
 import useSize from "../hooks/useSize"
 import { db } from "../utils/db"
 
-
-import Notification from "./Notification"
 import Profile from "./Profile"
 
 import Add from "../icon/Add"
@@ -18,15 +16,11 @@ import "../style/style.css"
 
 interface props {
 	onNew: () => void
+	onDelete: (id: number, isActive: boolean) => void
 	onChangeActive: (id: number) => void
 }
-const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
+const ChatTitle: FC<props> = ({ onNew, onDelete, onChangeActive }) => {
 	const size = useSize()
-	const [openConfirm, setOpenConfirm] = useState(false)
-	const [deleteState, setDeleteState] = useState<{id: number, isActive: boolean}>({
-		id: 0,
-		isActive: false
-	})
 
 	const chatList = useLiveQuery(
 		async () => (await db.friends.toArray()).reverse()
@@ -45,23 +39,6 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 		await db.friends.update(current?.id as number, {...current, isActive: false})
 
 		onNew()
-	}
-
-	const deleteChat = async (id: number, isActive: boolean) => {
-		setOpenConfirm(true)
-
-		setDeleteState({id, isActive})
-	}
-
-	const confirm = async () => {
-		const {id, isActive} = deleteState
-		await db.friends.delete(id)
-
-		if (isActive) {
-			onNew()
-		}
-
-		setOpenConfirm(false)
 	}
 
 	return (
@@ -96,7 +73,7 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 										className="absolute inset-y-0 right-1 trash"
 										onClick={e => {
 											e.stopPropagation()
-											deleteChat(v.id as number, v.isActive)
+											onDelete(v.id as number, v.isActive)
 										}}
 									>
 										<Trash />
@@ -121,12 +98,6 @@ const ChatTitle: FC<props> = ({ onNew, onChangeActive }) => {
 					))
 				}
 			</section>
-
-			<Notification
-				visible={openConfirm}
-				onCancel={() => setOpenConfirm(false)}
-				onConfirm={confirm}
-			/>
 		</div>
 	)
 }

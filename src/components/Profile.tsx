@@ -29,7 +29,7 @@ const Profile = ({
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               aria-label="Phonenumber"
-              className="w-4 h-4"
+              className="w-4 h-4 dark:text-gray-400"
             >
               <path
                 fill="currentColor"
@@ -43,7 +43,7 @@ const Profile = ({
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
               aria-label="Email address"
-              className="w-4 h-4"
+              className="w-4 h-4 dark:text-gray-400"
             >
               <path
                 fill="currentColor"
