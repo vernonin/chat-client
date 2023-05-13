@@ -221,7 +221,7 @@ const ChatMain: FC = () => {
     setMessages(newMsg)
 
     if (length < 1) {
-      addChat({ sessionId: uid, title: value, isActive: true, content: newMsg })
+      addChat({ sessionId: uid, title: value.slice(0, 20), isActive: true, content: newMsg })
     } else {
       updateChat(newMsg)
     }
