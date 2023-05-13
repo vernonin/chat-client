@@ -1,17 +1,18 @@
 import { useLiveQuery } from "dexie-react-hooks"
-import { FC } from "react"
+import { FC, useContext } from "react"
 
 import useSize from "../hooks/useSize"
 import { db } from "../utils/db"
 
+import { Context } from "../page/ChatMain"
 import Profile from "./Profile"
 
 import Add from "../icon/Add"
 import Chat from "../icon/Chat"
+import Edit from "../icon/Edit"
 import Team from "../icon/Team"
 import Trash from "../icon/Trash"
 
-import Edit from "../icon/Edit"
 import { chatLogo, chatTitle, titleItem } from "../style"
 import "../style/style.css"
 
@@ -23,6 +24,7 @@ interface props {
 }
 const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 	const size = useSize()
+	const context = useContext(Context)
 
 	const chatList = useLiveQuery(
 		async () => (await db.friends.toArray()).reverse()
@@ -68,10 +70,12 @@ const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 									}}
 								>
 									<Chat />
-									<div className="ml-1 flex-1 break-normal truncate">{v.title}</div>
+									<div
+										className={`ml-1 flex-1 break-normal truncate ${v.isActive && context?.loading ? 'text-bln' : ''}`}
+									>{v.title}</div>
 									<div style={{height: "100%"}} className={`flex items-center justify-between space-x-1 ct-bar ${v.isActive ? 'ct-bar-show' : ''}`}>
-										<Edit onClick={() => onEdit(v.id as number)}/>
-										<Trash onClick={() => onDelete(v.id as number, v.isActive)} />
+										<Edit onClick={() => !context?.loading && onEdit(v.id as number)}/>
+										<Trash onClick={() => !context?.loading && onDelete(v.id as number, v.isActive)} />
 									</div>
 								</div>
 							))

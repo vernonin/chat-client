@@ -26,7 +26,7 @@ const EditBox: FC<props> = ({ visible, onCancel, onSubmit }) => {
 			onCancel()
 		}}>
 			<div
-				className="bg-gray-50 w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100"
+				className="bg-gray-50 w-full max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100 scale-in-center"
 				onClick={e => e.stopPropagation()}
 			>
 				<h1 className="text-2xl font-bold text-center">修改标题</h1>
