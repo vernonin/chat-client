@@ -309,7 +309,6 @@ const ChatMain: FC = () => {
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
           draggable
           pauseOnHover
           theme={theme}

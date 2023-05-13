@@ -13,7 +13,7 @@ const Notification = ({ visible, onCancel, onConfirm }: props) => {
 
 	return (
 		<div className="modal-outer">
-			<div  className="bg-gray-50 rounded-lg">
+			<div  className="bg-gray-50 rounded-lg scale-in-center">
 				<div className="flex flex-col max-w-md gap-2 p-6 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
 					<h2 className="flex items-center gap-2 text-xl font-semibold leading-tight tracking-wide">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-6 h-6 fill-current shrink-0 text-yellow-500 dark:text-yellow-300">
