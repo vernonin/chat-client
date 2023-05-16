@@ -14,16 +14,16 @@ export const topBar = `
 /**
  * 标题区域
  */
-export const chatTitle = `flex flex-col overflow-hidden
+export const chatTitle = `flex flex-col
 	bg-blue-100 divide-y divide-black divide-opacity-50
-	dark:bg-gray-900 dark:divide-white
+	dark:bg-slate-950 dark:divide-white
 `
 export const chatLogo = `
-	text-lg font-bold text-center flex items-center justify-center
+	text-lg font-bold text-center flex items-center justify-center scale-down-center
 	dark:text-white
 `
 export const titleItem = `
-  hover:bg-blue-300 dark:hover:bg-blue-900 add-effect
+  add-effect
 	flex relative items-center mt-2 px-1 text-sm antialiased font-semibold
 	cursor-pointer border border-gray-400 rounded-lg h-10 text-gray-800 chat-title-item
 	dark:text-white
@@ -50,4 +50,13 @@ export const input = `
 	focus:outline-none focus:ring focus:border-blue-100 placeholder-gray-500
 
 	dark:bg-gray-400 dark:text-gray-900 dark:text-white dark:border-gray-300 dark:placeholder-gray-100
+`
+
+
+/**
+ * profile
+ */
+export const profile = `
+	h-22 mb-2 p-2 rounded-md bg-gradient-to-r from-indigo-200 to-indigo-300
+	dark:from-gray-500 dark:to-gray-600
 `

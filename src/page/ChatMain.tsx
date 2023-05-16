@@ -267,7 +267,7 @@ const ChatMain: FC = () => {
               {/* 主聊天框 */}
               <div
                 style={{ height: `${size.height - 82}px` }}
-                className={`dark:bg-gray-700 px-2 lg:px-12 md:px-6 ${showTopic ? "opacity-50" : ""}`}
+                className={`dark:bg-gray-900 px-2 lg:px-12 md:px-6 ${showTopic ? "opacity-50" : ""}`}
                 onClick={() => setShowTopic(false)}
               >
                 <div

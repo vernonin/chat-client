@@ -10,7 +10,6 @@ import Profile from "./Profile"
 import Add from "../icon/Add"
 import Chat from "../icon/Chat"
 import Edit from "../icon/Edit"
-import Team from "../icon/Team"
 import Trash from "../icon/Trash"
 
 import { chatLogo, chatTitle, titleItem } from "../style"
@@ -62,8 +61,10 @@ const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 						{
 							chatList?.map(v => (
 								<div
+									onAnimationStart={() => console.log('Start')}
+									onAnimationEnd={() => console.log('End')}
 									key={v.sessionId}
-									className={`${titleItem} ${v.isActive ? "bg-blue-300 dark:bg-blue-900" : ""}`}
+									className={`${titleItem} ${v.isActive ? "bg-blue-300 dark:bg-blue-900" : ""} hover:bg-blue-300 dark:hover:bg-blue-900`}
 									onClick={() => {
 										if (v.isActive) return
 										onChangeActive(v.id as number)
@@ -86,7 +87,7 @@ const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 			<section style={{height: "300px"}} className="px-3">
 				<div className="flex justify-center items-center text-base py-2 font-bold text-gray-700 dark:text-gray-300">
 					<span className="mr-1">Meet our team</span>
-					<Team />
+					{/* <Team /> */}
 				</div>
 				{
 					[
