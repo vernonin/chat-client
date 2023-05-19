@@ -23,8 +23,10 @@ export default (): [ITheme, () => void] => {
 	useEffect(() => {
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark")
+			document.documentElement.style.setProperty("--typing-color", "#FFF")
 		} else {
 			document.documentElement.classList.remove("light")
+			document.documentElement.style.setProperty("--typing-color", "#000")
 		}
 	}, [])
 

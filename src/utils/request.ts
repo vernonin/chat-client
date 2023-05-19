@@ -1,14 +1,27 @@
-const URL = "/chat"
-const headers = {
-	"Content-Type": "application/json",
-};
+
 
 interface IData {
 	message: string
 	sessionId?: string
 }
 
+interface IConnectSSE {
+	message: string
+	sessionId?: string
+	callBack: (value: string) => void
+}
+
+/**
+ * V1 接口
+ * @data message
+ * @data sessionId
+ */
 export default async function (data: IData) {
+
+	const URL = "/chat"
+	const headers = {
+		"Content-Type": "application/json",
+	}
 
 	const config = { headers, method: "POST", body: JSON.stringify(data)}
 	
@@ -18,41 +31,43 @@ export default async function (data: IData) {
 }
 
 
-type IFc = {
-	message: string
-	sessionId?: string
-	callBack: (value: string) => void
-}
-
+/**
+ * V2 接口SSE
+ * @message string
+ * @sessionId string
+ * @callBack callBack function
+ */
 export const createSource = ({
 	message,
 	sessionId,
 	callBack
-}: IFc) => {
+}: IConnectSSE) => {
 	return new Promise<void>((resolve, resject) => {
-		const Event = new EventSource(`/chat/v2?sessionId=${sessionId}&message=${message}`, {
-			withCredentials: true
-		});
+		const url =`/chat/v2?sessionId=${sessionId}&message=${message}`
 
-		try {
-			Event.onmessage = (message) => {
-				callBack(message.data)
-			}
-	
-			Event.onopen = () => {
-				console.log("连接已建立！")
-			}
-	
-			Event.onerror = (e) => {
-				console.log("++", e)
-				Event.close()
+		const Event = new EventSource(url, { withCredentials: true })
+
+		// 监听服务端发送消息
+		Event.onmessage = (message) => {
+			// 换行标识符
+			const wrapReg = /!xsy!/g
+
+			// 结束标识符
+			const endSymbol = "[END]"
+
+			// 服务端推流完成，结束等待，关闭连接
+			if (message.data.includes(endSymbol)) {
 				resolve()
+				Event.close()
 			}
+
+			callBack(message.data.replace(wrapReg, "\n"))
 		}
-		catch {
-			resject()
+
+		// 连接错误，抛出报错信息，关闭连接
+		Event.onerror = (e) => {
+			resject(e)
+			Event.close()
 		}
 	})
 }
-
-

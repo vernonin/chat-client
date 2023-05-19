@@ -175,7 +175,8 @@ const ChatMain: FC = () => {
    * @value 服务器返回值
    */
   const receiveData = (value: string) => {
-    const message = value.replace(/!xsy!/g, "\n")
+
+    if (value.trim() === "") return
 
     setMessages(msg => {
       const lastIndex = msg.length - 1
@@ -193,13 +194,14 @@ const ChatMain: FC = () => {
         return newMsg
       }
 
-      msg[lastIndex].message = message
+      msg[lastIndex].message = value
       updateChat([...msg])
       return [...msg]
     })
 
     cRef.current?.scrollBottm()
   }
+
 
 	/**
 	 * 用户输入回车
@@ -228,7 +230,7 @@ const ChatMain: FC = () => {
 
     try {
       await createSource({
-        message: value,
+        message: encodeURIComponent(value),
         callBack: receiveData,
         sessionId: getCurrSessionId() || uid,
       })
@@ -238,7 +240,7 @@ const ChatMain: FC = () => {
         key: nanoid(),
         role: "error",
         date: getCurrentDate(),
-        message: (error as Error).message
+        message: "连接失败，请重试！"
       }])
     }
 
@@ -267,7 +269,7 @@ const ChatMain: FC = () => {
               {/* 主聊天框 */}
               <div
                 style={{ height: `${size.height - 82}px` }}
-                className={`dark:bg-gray-900 px-2 lg:px-12 md:px-6 ${showTopic ? "opacity-50" : ""}`}
+                className={`dark:bg-slate-800 px-2 lg:px-12 md:px-6 ${showTopic ? "opacity-50" : ""}`}
                 onClick={() => setShowTopic(false)}
               >
                 <div

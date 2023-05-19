@@ -154,8 +154,7 @@
 }
 
 
-.typing>p:last-child::after,
-.typing li:last-child::after {
+.typing>p:last-child::after {
 	content: "";
 	display: inline-block;
   width: 0.6rem;

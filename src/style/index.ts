@@ -8,7 +8,7 @@ export const outContainer = `flex over overflow-hidden w-screen`
 
 export const topBar = `
 	flex justify-between items-center bg-blue-50 px-2 lg:px-12 md:px-6
-	dark:bg-gray-800 dark:text-white
+	dark:bg-slate-900 dark:text-white
 `
 
 /**
@@ -19,7 +19,7 @@ export const chatTitle = `flex flex-col
 	dark:bg-slate-950 dark:divide-white
 `
 export const chatLogo = `
-	text-lg font-bold text-center flex items-center justify-center scale-down-center
+	text-lg font-bold text-center flex items-center justify-center
 	dark:text-white
 `
 export const titleItem = `
@@ -37,7 +37,7 @@ export const titleItem = `
 export const footer = `
 	absolute left-0 right-0 bottom-0 
 	bg-gray-100 text-center text-gray-500 text-sm
-	dark:bg-gray-800 dark:text-white
+	dark:bg-slate-700 dark:text-white
 `
 
 
@@ -58,5 +58,5 @@ export const input = `
  */
 export const profile = `
 	h-22 mb-2 p-2 rounded-md bg-gradient-to-r from-indigo-200 to-indigo-300
-	dark:from-gray-500 dark:to-gray-600
+	dark:from-gray-600 dark:to-gray-700
 `

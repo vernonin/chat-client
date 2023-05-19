@@ -61,8 +61,6 @@ const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 						{
 							chatList?.map(v => (
 								<div
-									onAnimationStart={() => console.log('Start')}
-									onAnimationEnd={() => console.log('End')}
 									key={v.sessionId}
 									className={`${titleItem} ${v.isActive ? "bg-blue-300 dark:bg-blue-900" : ""} hover:bg-blue-300 dark:hover:bg-blue-900`}
 									onClick={() => {
@@ -86,7 +84,10 @@ const ChatTitle: FC<props> = ({ onNew, onEdit, onDelete, onChangeActive }) => {
 			</section>
 			<section style={{height: "300px"}} className="px-3">
 				<div className="flex justify-center items-center text-base py-2 font-bold text-gray-700 dark:text-gray-300">
-					<span className="mr-1">Meet our team</span>
+					<span className="text-lg w-full text-center">
+						<span>Meet our team</span>
+						<span className="text-xs float-right px-2 py-1 rounded-md text-white bg-green-500 dark:bg-emerald-400 dark:text-gray-900">合作/推广</span>
+					</span>
 					{/* <Team /> */}
 				</div>
 				{

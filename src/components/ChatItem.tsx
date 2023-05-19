@@ -46,10 +46,11 @@ const LeftChat: FC<LeftChatProps> = ({
 			className={`flex  scroll-none mt-2 chat-item dark:text-gray-100 ${role === "user" ? "flex-row-reverse" : ""}`}
 		>
 			<img style={style} className="rounded-lg transform translate-y-2" src={role === "user" ? "/user.png" : "/gpt.png"} />
-			<div className={role === "user" ? "me-2 text-right" : "ms-2"}>
-				<p
-					className={`lh-sm mb-1 text-xs ${role === "user" ? "text-end" : ""}`}
-				>{date}</p>
+			<div
+				style={role === "user" ? {alignItems: "end"} : {}}
+				className={role === "user" ? "me-2 flex flex-col" : "ms-2"}
+			>
+				<p className={`lh-sm mb-1 text-xs ${role === "user" ? "text-end" : ""}`}>{date}</p>
 				<div
 					style={{ display: "inline-block" }}
 					className={`
