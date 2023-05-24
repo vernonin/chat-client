@@ -59,9 +59,9 @@ export const createSource = ({
 			if (message.data.includes(endSymbol)) {
 				resolve()
 				Event.close()
+			} else {
+				callBack(message.data.replace(wrapReg, "\n"))
 			}
-
-			callBack(message.data.replace(wrapReg, "\n"))
 		}
 
 		// 连接错误，抛出报错信息，关闭连接
