@@ -179,6 +179,12 @@
 	margin-top: 0.6rem;
 }
 
+.msg-item ul,
+.msg-item ol {
+	list-style: circle;
+	padding-left: 1.2rem;
+}
+
 
 .modal-outer {
 	width: 100vw;

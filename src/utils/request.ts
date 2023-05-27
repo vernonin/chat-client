@@ -55,6 +55,8 @@ export const createSource = ({
 			// 结束标识符
 			const endSymbol = "[END]"
 
+			console.log(message.data)
+
 			// 服务端推流完成，结束等待，关闭连接
 			if (message.data.includes(endSymbol)) {
 				resolve()
@@ -69,5 +71,49 @@ export const createSource = ({
 			resject(e)
 			Event.close()
 		}
+	})
+}
+
+
+export const ChatFech = ({sessionId, message, callBack}: IConnectSSE): Promise<void> => {
+	return new Promise((resolve, reject) => {
+		const URL = `/chat/v2?sessionId=${sessionId}&message=${message}`
+		
+		fetch(URL).then(async response => {
+			console.log('++++', response)
+
+			const reader = response.body?.getReader()
+			const textDecoder = new TextDecoder()
+
+			if (!response.ok) {
+				reject()
+				return
+			}
+
+			// eslint-disable-next-line no-constant-condition
+			while (true) {
+				// eslint-disable-next-line no-unsafe-optional-chaining
+				const {done, value} = await reader?.read()
+
+				const message = textDecoder.decode(value).replace(/!xsy!/g, "\n")
+
+				if (done) {
+					break;
+				}
+
+				if (message.includes("[END]")) {
+					break;
+				}
+
+				if (message === "data:") {
+					continue
+				}
+
+				console.log(message)
+				callBack(message)
+			}
+
+			resolve()
+		})
 	})
 }

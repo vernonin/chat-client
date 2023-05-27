@@ -8,7 +8,7 @@ import useTheme from "../hooks/useTheme"
 import { IChat, db } from "../utils/db"
 import getCurrentDate from "../utils/getCurrentDate"
 import getUUID from "../utils/getUUID"
-import { createSource } from "../utils/request"
+import { ChatFech } from "../utils/request"
 
 import ChatTitle from "../components/ChatTitle"
 import Content, { IMessage } from "../components/Content"
@@ -229,11 +229,16 @@ const ChatMain: FC = () => {
     }
 
     try {
-      await createSource({
-        message: encodeURIComponent(value),
+      await ChatFech({
         callBack: receiveData,
         sessionId: getCurrSessionId() || uid,
+        message: encodeURIComponent(value)
       })
+      // await createSource({
+      //   message: encodeURIComponent(value),
+      //   callBack: receiveData,
+      //   sessionId: getCurrSessionId() || uid,
+      // })
     }
     catch (error) {
       setMessages(msg => [...msg, {
